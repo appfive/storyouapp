@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>استوریو - ریلز</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      overflow: hidden;
+      font-family: 'Vazir', sans-serif;
+      background: black;
+    }
+
+    #container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: auto;
+    }
+
+    .reel {
+      position: relative;
+      height: 100vh;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+
+    video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: filter 0.3s;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.4) 10%, transparent 90%);
+      pointer-events: none;
+    }
+
+    .top-text img { height: 40px; }
+
+    .bottom-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      pointer-events: auto;
+    }
+
+    .text-content {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .app-name {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    .hashtag { color: #2196f3; }
+
+    .left-icons {
+      position: absolute;
+      left: 10px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn img {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.7));
+    }
+
+    .like-count {
+      color: white;
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: -6px;
+      font-weight: 600;
+      text-align: center;
+      width: 48px;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 80px; height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 20;
+    }
+
+    .play-btn.show { opacity: 1; }
+
+    .liked { animation: like-pop 0.3s ease; }
+
+    @keyframes like-pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <!-- فقط 3 ریل نمونه -->
+  <div class="reel">
+    <video src="https://caspian18.cdn.asset.aparat.com/aparat-video/331400c01860ecc40958456e0a7e2b3460663198-480p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY5NDAwM2JkZDUxYmRiNzViYmVmMzA2ZjQ3OTZhMWZjIiwiZXhwIjoxNzUyNzcyOTY0LCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.c1UMWOCNkhPLhSsT7hfYBUz_DrIUprlPGWgiIS3FtEs" playsinline></video>
+    
+    <!-- پیام برای پخش کلیک کنید فقط برای ریل اول -->
+    <div class="click-to-play" style="
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.6);
+      color:white;
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:25;
+      cursor:pointer;
+    ">
+      برای پخش کلیک کنید
+    </div>
+
+    <button class="play-btn">▶</button>
+    <div class="overlay">
+      <div class="top-text"><img src="https://s6.uupload.ir/files/negar_1752576942040_bdws.png"></div>
+      <div class="bottom-content">
+        <div class="text-content">
+          <div class="app-name">storyou.app</div>
+          <div>آموزش ساخت استوری صبح بخیر</div>
+          <div>#استوری #صبح_بخیر</div>
+        </div>
+      </div>
+    </div>
+    <div class="left-icons">
+      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
+      <span class="like-count">120</span>
+      <button class="icon-btn"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"></button>
+    </div>
+  </div>
+  <div class="reel">
+    <video src="https://caspian18.cdn.asset.aparat.com/aparat-video/331400c01860ecc40958456e0a7e2b3460663198-480p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY5NDAwM2JkZDUxYmRiNzViYmVmMzA2ZjQ3OTZhMWZjIiwiZXhwIjoxNzUyNzcyOTY0LCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.c1UMWOCNkhPLhSsT7hfYBUz_DrIUprlPGWgiIS3FtEs" playsinline></video>
+    <button class="play-btn">▶</button>
+    <div class="overlay">
+      <div class="top-text"><img src="https://s6.uupload.ir/files/negar_1752576942040_bdws.png"></div>
+      <div class="bottom-content">
+        <div class="text-content">
+          <div class="app-name">storyou.app</div>
+          <div>آموزش استوری گرافیکی</div>
+          <div>#استوری #آموزش</div>
+        </div>
+      </div>
+    </div>
+    <div class="left-icons">
+      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
+      <span class="like-count">340</span>
+      <button class="icon-btn"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"></button>
+    </div>
+  </div>
+  <div class="reel">
+    <video src="https://persian20.cdn.asset.aparat.com/aparat-video/e170394d4f7999855c8894f6b9ff15e962598804-240p.mp4" playsinline></video>
+    <button class="play-btn">▶</button>
+    <div class="overlay">
+      <div class="top-text"><img src="https://s6.uupload.ir/files/negar_1752576942040_bdws.png"></div>
+      <div class="bottom-content">
+        <div class="text-content">
+          <div class="app-name">storyou.app</div>
+          <div>آموزش افکت ویدیو</div>
+          <div>#افکت #آموزش</div>
+        </div>
+      </div>
+    </div>
+    <div class="left-icons">
+      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
+      <span class="like-count">220</span>
+      <button class="icon-btn"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"></button>
+    </div>
+  </div>
+</div>
+
+<BLOGFA>
+
+<script>
+  document.querySelectorAll('.reel').forEach(reel => {
+    const video = reel.querySelector('video');
+    const playBtn = reel.querySelector('.play-btn');
+    const likeBtn = reel.querySelector('.like-btn img');
+    const likeCountEl = reel.querySelector('.like-count');
+    let liked = false;
+    let likeCount = parseInt(likeCountEl.textContent);
+
+    // اگر پیام کلیک برای پخش وجود داشت (فقط در ریل اول هست)
+    const clickToPlay = reel.querySelector('.click-to-play');
+    if (clickToPlay) {
+      clickToPlay.addEventListener('click', () => {
+        clickToPlay.remove();
+        video.play();
+      });
+    }
+
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          video.play().catch(()=>{});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.8 }).observe(reel);
+
+    video.addEventListener('pause', () => playBtn.classList.add('show'));
+    video.addEventListener('play', () => playBtn.classList.remove('show'));
+
+    video.addEventListener('click', () => video.paused ? video.play() : video.pause());
+    playBtn.addEventListener('click', () => video.play());
+
+    likeBtn.parentElement.addEventListener('click', e => {
+      e.preventDefault();
+      liked = !liked;
+      likeBtn.src = liked
+        ? "https://s6.uupload.ir/files/negar_1752564560024_nnku.png"
+        : "https://s6.uupload.ir/files/negar_1752564553006_r285.png";
+      likeBtn.classList.add('liked');
+      setTimeout(()=>likeBtn.classList.remove('liked'),300);
+      likeCount += liked ? 1 : -1;
+      likeCountEl.textContent = likeCount;
+    });
+
+    const txt = reel.querySelector('.text-content');
+    txt.innerHTML = txt.innerHTML.replace(/(#\S+)/g, '<span class="hashtag">$1</span>');
+  });
+
+  const container = document.getElementById('container');
+  let scrolling = false;
+  container.addEventListener('wheel', e => {
+    if(scrolling) return;
+    scrolling = true;
+    const reels = Array.from(document.querySelectorAll('.reel'));
+    const current = reels.findIndex(r => r.getBoundingClientRect().top >= -10 && r.getBoundingClientRect().top <= 10);
+    let next;
+    if(e.deltaY > 0) next = Math.min(reels.length-1, current+1);
+    else next = Math.max(0, current-1);
+    reels[next].scrollIntoView({behavior:'auto'});
+    setTimeout(()=>scrolling=false,300);
+  });
+</script>
+
+</body>
+</html>
