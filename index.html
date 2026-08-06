@@ -27,8 +27,8 @@
         }
 
         :root {
-            --primary-pink: #e91e63;
-            --bg-canvas: #e91e63;
+            --primary-blue: #1976d2;
+            --bg-canvas: #1976d2;
             --card-bg: rgba(255, 255, 255, 0.22);
             --card-border: rgba(255, 255, 255, 0.25);
             --text-color: #ffffff;
@@ -366,30 +366,25 @@
             outline: none;
         }
 
-        .color-picker-circle {
-            width: 28px;
-            height: 28px;
+        .color-picker-spectrum {
+            -webkit-appearance: none;
+            border: 2px solid #ffffff;
             border-radius: 50%;
-            border: 2px solid white;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
-            background: transparent;
+            background: none;
+            padding: 0;
+            overflow: hidden;
         }
 
-        /* ایموجی استیکرها */
-        .emoji-grid {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 4px 0;
+        .color-picker-spectrum::-webkit-color-swatch-wrapper {
+            padding: 0;
         }
 
-        .emoji-btn {
-            background: rgba(255,255,255,0.2);
+        .color-picker-spectrum::-webkit-color-swatch {
             border: none;
-            font-size: 1.1rem;
-            padding: 6px 10px;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 50%;
         }
 
         /* مدال ویرایش متن */
@@ -567,6 +562,8 @@
                         <option value="pill" style="color:black">کپسولی گرد</option>
                         <option value="rounded" style="color:black">گوشه گرد</option>
                         <option value="rect" style="color:black">مستطیل</option>
+                        <option value="leaf" style="color:black">برگ (قطری)</option>
+                        <option value="cut" style="color:black">مورب کج</option>
                         <option value="none" style="color:black">بدون برچسب</option>
                     </select>
 
@@ -575,6 +572,9 @@
                         <option value="none" style="color:black">ساده</option>
                         <option value="stripes" style="color:black">خطوط مورب</option>
                         <option value="dots" style="color:black">نقطه‌ای</option>
+                        <option value="grid" style="color:black">شطرنجی</option>
+                        <option value="cross" style="color:black">ضربدری</option>
+                        <option value="waves" style="color:black">موج‌دار</option>
                     </select>
                 </div>
 
@@ -591,11 +591,11 @@
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
-                    <input type="color" id="textColorPicker" value="#222222" onchange="render()" class="color-picker-circle">
+                    <input type="color" id="textColorPicker" value="#ffffff" oninput="render()" class="color-picker-spectrum">
                     <span>رنگ برچسب:</span>
-                    <input type="color" id="badgeColorPicker" value="#ffffff" onchange="render()" class="color-picker-circle">
+                    <input type="color" id="badgeColorPicker" value="#000000" oninput="render()" class="color-picker-spectrum">
                     <span>رنگ سایه:</span>
-                    <input type="color" id="shadowColorPicker" value="#000000" onchange="render()" class="color-picker-circle">
+                    <input type="color" id="shadowColorPicker" value="#000000" oninput="render()" class="color-picker-spectrum">
                 </div>
                 <div class="control-row">
                     <label>میزان سایه:</label>
@@ -605,16 +605,19 @@
                 </div>
             </div>
 
-            <!-- تب ۴: افزودن استیکر -->
-            <div class="sub-panel" id="tabContentStickers">
-                <div class="emoji-grid">
-                    <button class="emoji-btn" onclick="addEmoji('✨')">✨</button>
-                    <button class="emoji-btn" onclick="addEmoji('🔥')">🔥</button>
-                    <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
-                    <button class="emoji-btn" onclick="addEmoji('👑')">👑</button>
-                    <button class="emoji-btn" onclick="addEmoji('💎')">💎</button>
-                    <button class="emoji-btn" onclick="addEmoji('📍')">📍</button>
-                    <button class="emoji-btn" onclick="addEmoji('⚡')">⚡</button>
+            <!-- تب ۴: زیباسازی و جلوه‌ها (جایگزین استیکر) -->
+            <div class="sub-panel" id="tabContentBeauty">
+                <div class="control-row">
+                    <label>فریم و کادر:</label>
+                    <select id="frameStyleSelect" onchange="render()">
+                        <option value="none" style="color:black">بدون کادر</option>
+                        <option value="simple" style="color:black">خط ساده</option>
+                        <option value="double" style="color:black">کادر دو لایه</option>
+                        <option value="dashed" style="color:black">چین‌دار / نقطه چین</option>
+                    </select>
+
+                    <label>زاویه چرخش:</label>
+                    <input type="range" id="rotationAngle" min="-30" max="30" value="0" step="1" oninput="render()">
                 </div>
             </div>
 
@@ -623,7 +626,7 @@
                 <button class="main-tab-item active" onclick="switchMainTab('fonts', this)">فونت</button>
                 <button class="main-tab-item" onclick="switchMainTab('style', this)">استایل</button>
                 <button class="main-tab-item" onclick="switchMainTab('color', this)">رنگ & سایه</button>
-                <button class="main-tab-item" onclick="switchMainTab('stickers', this)">استیکر</button>
+                <button class="main-tab-item" onclick="switchMainTab('beauty', this)">زیباسازی</button>
             </div>
         </div>
 
@@ -643,7 +646,7 @@
         let currentText = "متنتو بنویس...";
         let currentFont = "Vazirmatn";
         let alignState = 0; // 0: center, 1: right, 2: left
-        let bgColors = ['#e91e63', '#8e24aa', '#3f51b5', '#009688', '#ff5722', '#181818'];
+        let bgColors = ['#1976d2', '#8e24aa', '#e91e63', '#009688', '#ff5722', '#181818'];
         let bgIndex = 0;
 
         function resizeCanvas() {
@@ -659,6 +662,7 @@
             pCanvas.height = 16;
             const pCtx = pCanvas.getContext('2d');
             pCtx.strokeStyle = colorHex;
+            pCtx.fillStyle = colorHex;
             pCtx.lineWidth = 2;
 
             if (patternType === 'stripes') {
@@ -666,10 +670,21 @@
                 pCtx.moveTo(0, 16); pCtx.lineTo(16, 0);
                 pCtx.stroke();
             } else if (patternType === 'dots') {
-                pCtx.fillStyle = colorHex;
                 pCtx.beginPath();
                 pCtx.arc(8, 8, 2.5, 0, Math.PI * 2);
                 pCtx.fill();
+            } else if (patternType === 'grid') {
+                pCtx.strokeRect(0, 0, 16, 16);
+            } else if (patternType === 'cross') {
+                pCtx.beginPath();
+                pCtx.moveTo(0, 0); pCtx.lineTo(16, 16);
+                pCtx.moveTo(16, 0); pCtx.lineTo(0, 16);
+                pCtx.stroke();
+            } else if (patternType === 'waves') {
+                pCtx.beginPath();
+                pCtx.arc(0, 8, 6, Math.PI / 2, -Math.PI / 2, true);
+                pCtx.arc(16, 8, 6, -Math.PI / 2, Math.PI / 2, false);
+                pCtx.stroke();
             }
             return ctx.createPattern(pCanvas, 'repeat');
         }
@@ -680,6 +695,8 @@
             const fontSize = parseInt(sliderSize.value) * 2;
             const badgeStyle = document.getElementById('badgeStyleSelect').value;
             const badgePattern = document.getElementById('badgePatternSelect').value;
+            const frameStyle = document.getElementById('frameStyleSelect') ? document.getElementById('frameStyleSelect').value : 'none';
+            const rotationDeg = document.getElementById('rotationAngle') ? parseInt(document.getElementById('rotationAngle').value) : 0;
             const textColor = document.getElementById('textColorPicker').value;
             const badgeColor = document.getElementById('badgeColorPicker').value;
             const shadowColor = document.getElementById('shadowColorPicker').value;
@@ -689,6 +706,32 @@
             const lineHeightFactor = parseFloat(document.getElementById('lineHeightSlider').value);
 
             ctx.save();
+
+            // اعمال زاویه چرخش کل محتوا
+            if (rotationDeg !== 0) {
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate((rotationDeg * Math.PI) / 180);
+                ctx.translate(-canvas.width / 2, -canvas.height / 2);
+            }
+
+            // ۱. رسم کادر و فریم زیبایی
+            if (frameStyle !== 'none') {
+                ctx.save();
+                ctx.strokeStyle = textColor;
+                ctx.lineWidth = 6;
+                const margin = 30;
+                if (frameStyle === 'simple') {
+                    ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
+                } else if (frameStyle === 'double') {
+                    ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
+                    ctx.strokeRect(margin + 10, margin + 10, canvas.width - (margin + 10) * 2, canvas.height - (margin + 10) * 2);
+                } else if (frameStyle === 'dashed') {
+                    ctx.setLineDash([16, 12]);
+                    ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
+                }
+                ctx.restore();
+            }
+
             ctx.font = `700 ${fontSize}px "${currentFont}", sans-serif`;
             ctx.direction = 'rtl';
             ctx.textAlign = alignState === 0 ? 'center' : (alignState === 1 ? 'right' : 'left');
@@ -704,7 +747,7 @@
 
             const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);
 
-            // 1. رسم برچسب (Badge)
+            // ۲. رسم برچسب (Badge)
             if (badgeStyle !== 'none') {
                 lines.forEach((line, i) => {
                     const metrics = ctx.measureText(line || " ");
@@ -730,6 +773,14 @@
                         ctx.roundRect(boxX, boxY, boxW, boxH, boxH / 2);
                     } else if (badgeStyle === 'rounded') {
                         ctx.roundRect(boxX, boxY, boxW, boxH, 14);
+                    } else if (badgeStyle === 'cut') {
+                        ctx.moveTo(boxX + 15, boxY);
+                        ctx.lineTo(boxX + boxW, boxY);
+                        ctx.lineTo(boxX + boxW - 15, boxY + boxH);
+                        ctx.lineTo(boxX, boxY + boxH);
+                        ctx.closePath();
+                    } else if (badgeStyle === 'leaf') {
+                        ctx.roundRect(boxX, boxY, boxW, boxH, [20, 0, 20, 0]);
                     } else {
                         ctx.rect(boxX, boxY, boxW, boxH);
                     }
@@ -737,14 +788,14 @@
 
                     // پترن روی برچسب
                     if (badgePattern !== 'none') {
-                        ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.15)');
+                        ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.18)');
                         ctx.fill();
                     }
                     ctx.restore();
                 });
             }
 
-            // 2. تنظیمات سایه و رسم متن
+            // ۳. تنظیمات سایه و رسم متن
             ctx.shadowColor = shadowColor;
             ctx.shadowBlur = shadowBlur;
             ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;
@@ -792,7 +843,7 @@
             document.getElementById('tabContentFonts').style.display = (tabName === 'fonts') ? 'block' : 'none';
             document.getElementById('tabContentStyle').classList.toggle('active', tabName === 'style');
             document.getElementById('tabContentColor').classList.toggle('active', tabName === 'color');
-            document.getElementById('tabContentStickers').classList.toggle('active', tabName === 'stickers');
+            document.getElementById('tabContentBeauty').classList.toggle('active', tabName === 'beauty');
         }
 
         function openTextModal() {
@@ -811,12 +862,6 @@
             mainTextInput.value = "";
             render();
             openTextModal();
-        }
-
-        function addEmoji(emoji) {
-            currentText = emoji + "\n" + currentText;
-            mainTextInput.value = currentText;
-            render();
         }
 
         function changeBgColor() {
