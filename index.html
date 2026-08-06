@@ -173,23 +173,26 @@
             font-size: 0.85rem;
         }
 
-        /* اسلایدر عمودی اندازه سمت راست */
+        /* اسلایدر عمودی اندازه سمت راست - جابجاشده به راست‌تر */
         .vertical-slider-wrap {
             position: absolute;
-            right: 12px;
-            height: 140px;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 200px;
+            width: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 5;
+            z-index: 10;
         }
 
         .vertical-slider {
             -webkit-appearance: none;
-            width: 140px;
+            width: 180px;
             height: 4px;
             border-radius: 2px;
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.4);
             outline: none;
             transform: rotate(-90deg);
         }
@@ -201,7 +204,7 @@
             border-radius: 50%;
             background: #ffffff;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         /* 3. پنل پایین */
@@ -214,31 +217,22 @@
             z-index: 10;
         }
 
-        /* فیلترها */
+        /* فیلترها - فقط All باقی مانده است */
         .filter-tags {
             display: flex;
             gap: 8px;
             padding: 0 16px;
-            overflow-x: auto;
-            scrollbar-width: none;
         }
-        .filter-tags::-webkit-scrollbar { display: none; }
 
         .tag-btn {
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.25);
             border: none;
-            color: rgba(255, 255, 255, 0.9);
-            padding: 5px 14px;
+            color: #fff;
+            padding: 5px 16px;
             border-radius: 10px;
             font-size: 0.75rem;
             font-weight: bold;
-            white-space: nowrap;
             cursor: pointer;
-        }
-
-        .tag-btn.active {
-            background: rgba(255, 255, 255, 0.38);
-            color: #fff;
         }
 
         /* کارت‌های افقی فونت */
@@ -300,8 +294,15 @@
         .font-card-heart {
             position: absolute;
             bottom: 6px;
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .font-card-heart.active {
+            color: #ff3b30;
+            transform: scale(1.15);
         }
 
         /* تب‌های اصلی سفلی */
@@ -338,7 +339,7 @@
             border-radius: 2px;
         }
 
-        /* پنل‌های تنظیمات پیشرفته زیرین */
+        /* پنل‌های تنظیمات زیرین */
         .sub-panel {
             display: none;
             padding: 8px 16px;
@@ -366,26 +367,89 @@
             outline: none;
         }
 
-        .color-picker-spectrum {
-            -webkit-appearance: none;
+        /* دکمه بازکننده طیف رنگ دایره‌ای */
+        .color-preview-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
             border: 2px solid #ffffff;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
             cursor: pointer;
-            background: none;
-            padding: 0;
-            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            display: inline-block;
         }
 
-        .color-picker-spectrum::-webkit-color-swatch-wrapper {
-            padding: 0;
+        /* مدال طیف رنگ دایره‌ای */
+        .color-picker-modal {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 150;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(12px);
         }
+        .color-picker-modal.active { display: flex; }
 
-        .color-picker-spectrum::-webkit-color-swatch {
-            border: none;
+        .spectrum-wheel {
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
+            position: relative;
+            cursor: crosshair;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
+
+        .wheel-cursor {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 4px #000;
+            position: absolute;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .picker-sliders {
+            width: 220px;
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .picker-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+
+        .picker-slider-row input[type="range"] {
+            flex: 1;
+        }
+
+        .picker-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            width: 220px;
+        }
+
+        .picker-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .picker-btn-confirm { background: #ffffff; color: #000; }
+        .picker-btn-cancel { background: rgba(255,255,255,0.2); color: #fff; }
 
         /* مدال ویرایش متن */
         .text-modal {
@@ -479,9 +543,9 @@
                 <button class="action-circle-btn" onclick="openTextModal()"><i class="fa-solid fa-pen"></i></button>
             </div>
 
-            <!-- اسلایدر اندازه سمت راست -->
+            <!-- اسلایدر اندازه سمت راست (دامنه بیشتر و جابجا شده به راست) -->
             <div class="vertical-slider-wrap">
-                <input type="range" class="vertical-slider" id="sliderSize" min="25" max="110" value="55">
+                <input type="range" class="vertical-slider" id="sliderSize" min="5" max="180" value="55">
             </div>
         </div>
 
@@ -491,14 +555,10 @@
             <!-- تب ۱: فونت‌ها -->
             <div id="tabContentFonts">
                 <div class="filter-tags">
-                    <button class="tag-btn active">All <i class="fa-solid fa-angle-down" style="font-size: 0.6rem;"></i></button>
-                    <button class="tag-btn">New</button>
-                    <button class="tag-btn">Favorite</button>
-                    <button class="tag-btn">Free</button>
-                    <button class="tag-btn">Imported</button>
+                    <button class="tag-btn">All <i class="fa-solid fa-angle-down" style="font-size: 0.6rem;"></i></button>
                 </div>
 
-                <div class="font-cards-scroll" style="margin-top: 8px;">
+                <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">
                     <!-- کارت ایمپورت -->
                     <div class="card-import" onclick="document.getElementById('fontFileInput').click()">
                         <i class="fa-solid fa-plus"></i>
@@ -506,55 +566,55 @@
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     </div>
 
-                    <!-- کارت‌های فونت با پیش‌نمایش واقعی خود فونت -->
-                    <div class="font-card active" onclick="selectFont('Vazirmatn', this)">
+                    <!-- کارت‌های فونت -->
+                    <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">
                         <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Lalezar', this)">
+                    <div class="font-card" data-font="Lalezar" onclick="selectFont('Lalezar', this)">
                         <span class="font-card-title" style="font-family: 'Lalezar';">لاله‌زار</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Samim', this)">
+                    <div class="font-card" data-font="Samim" onclick="selectFont('Samim', this)">
                         <span class="font-card-title" style="font-family: 'Samim';">سمین</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Shabnam', this)">
+                    <div class="font-card" data-font="Shabnam" onclick="selectFont('Shabnam', this)">
                         <span class="font-card-title" style="font-family: 'Shabnam';">شبنم</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Sahel', this)">
+                    <div class="font-card" data-font="Sahel" onclick="selectFont('Sahel', this)">
                         <span class="font-card-title" style="font-family: 'Sahel';">ساحل</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Amiri', this)">
+                    <div class="font-card" data-font="Amiri" onclick="selectFont('Amiri', this)">
                         <span class="font-card-title" style="font-family: 'Amiri';">امیری</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Aref Ruqaa', this)">
+                    <div class="font-card" data-font="Aref Ruqaa" onclick="selectFont('Aref Ruqaa', this)">
                         <span class="font-card-title" style="font-family: 'Aref Ruqaa';">رقعة</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Montserrat', this)">
+                    <div class="font-card" data-font="Montserrat" onclick="selectFont('Montserrat', this)">
                         <span class="font-card-title" style="font-family: 'Montserrat';">Modern</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <div class="font-card" onclick="selectFont('Pacifico', this)">
+                    <div class="font-card" data-font="Pacifico" onclick="selectFont('Pacifico', this)">
                         <span class="font-card-title" style="font-family: 'Pacifico';">Fancy</span>
-                        <i class="fa-regular fa-heart font-card-heart"></i>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- تب ۲: استایل و برچسب پیشرفته -->
+            <!-- تب ۲: استایل -->
             <div class="sub-panel" id="tabContentStyle">
                 <div class="control-row">
                     <label>طرح برچسب:</label>
@@ -587,15 +647,17 @@
                 </div>
             </div>
 
-            <!-- تب ۳: رنگ و افکت -->
+            <!-- تب ۳: رنگ و سایه (همراه پالت طیف دایره‌ای) -->
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
-                    <input type="color" id="textColorPicker" value="#ffffff" oninput="render()" class="color-picker-spectrum">
+                    <div class="color-preview-btn" id="btnTextColor" style="background: #ffffff;" onclick="openSpectrumPicker('text')"></div>
+                    
                     <span>رنگ برچسب:</span>
-                    <input type="color" id="badgeColorPicker" value="#000000" oninput="render()" class="color-picker-spectrum">
+                    <div class="color-preview-btn" id="btnBadgeColor" style="background: #000000;" onclick="openSpectrumPicker('badge')"></div>
+                    
                     <span>رنگ سایه:</span>
-                    <input type="color" id="shadowColorPicker" value="#000000" oninput="render()" class="color-picker-spectrum">
+                    <div class="color-preview-btn" id="btnShadowColor" style="background: #000000;" onclick="openSpectrumPicker('shadow')"></div>
                 </div>
                 <div class="control-row">
                     <label>میزان سایه:</label>
@@ -605,9 +667,19 @@
                 </div>
             </div>
 
-            <!-- تب ۴: زیباسازی و جلوه‌ها (جایگزین استیکر) -->
+            <!-- تب ۴: برچسب آماده (جایگزین زیباسازی) -->
             <div class="sub-panel" id="tabContentBeauty">
                 <div class="control-row">
+                    <label>برچسب آماده:</label>
+                    <select id="presetBadgeSelect" onchange="applyBadgePreset(this.value)">
+                        <option value="custom" style="color:black">سفارشی</option>
+                        <option value="neon_dark" style="color:black">نئون مشکی</option>
+                        <option value="soft_white" style="color:black">سفید ملایم</option>
+                        <option value="retro_stripes" style="color:black">رترو راه راه</option>
+                        <option value="leaf_green" style="color:black">برگ مدرن</option>
+                        <option value="cut_modern" style="color:black">کج استایلیش</option>
+                    </select>
+
                     <label>فریم و کادر:</label>
                     <select id="frameStyleSelect" onchange="render()">
                         <option value="none" style="color:black">بدون کادر</option>
@@ -615,18 +687,41 @@
                         <option value="double" style="color:black">کادر دو لایه</option>
                         <option value="dashed" style="color:black">چین‌دار / نقطه چین</option>
                     </select>
-
+                </div>
+                <div class="control-row">
                     <label>زاویه چرخش:</label>
                     <input type="range" id="rotationAngle" min="-30" max="30" value="0" step="1" oninput="render()">
                 </div>
             </div>
 
-            <!-- نوار تب‌های اصلی پایین بدون انیمیشن -->
+            <!-- نوار تب‌های اصلی پایین -->
             <div class="main-tabs">
                 <button class="main-tab-item active" onclick="switchMainTab('fonts', this)">فونت</button>
                 <button class="main-tab-item" onclick="switchMainTab('style', this)">استایل</button>
                 <button class="main-tab-item" onclick="switchMainTab('color', this)">رنگ & سایه</button>
-                <button class="main-tab-item" onclick="switchMainTab('beauty', this)">زیباسازی</button>
+                <button class="main-tab-item" onclick="switchMainTab('beauty', this)">برچسب آماده</button>
+            </div>
+        </div>
+
+        <!-- مدال طیف انتخاب رنگ دایره‌ای -->
+        <div class="color-picker-modal" id="colorPickerModal">
+            <canvas class="spectrum-wheel" id="spectrumCanvas" width="220" height="220"></canvas>
+            <div class="wheel-cursor" id="wheelCursor"></div>
+            
+            <div class="picker-sliders">
+                <div class="picker-slider-row">
+                    <span>روشنی:</span>
+                    <input type="range" id="lumSlider" min="0" max="100" value="50">
+                </div>
+                <div class="picker-slider-row">
+                    <span>شفافیت:</span>
+                    <input type="range" id="alphaSlider" min="0" max="1" step="0.05" value="1">
+                </div>
+            </div>
+
+            <div class="picker-actions">
+                <button class="picker-btn picker-btn-cancel" onclick="closeSpectrumPicker()">لغو</button>
+                <button class="picker-btn picker-btn-confirm" onclick="confirmSpectrumColor()">تایید</button>
             </div>
         </div>
 
@@ -648,6 +743,14 @@
         let alignState = 0; // 0: center, 1: right, 2: left
         let bgColors = ['#1976d2', '#8e24aa', '#e91e63', '#009688', '#ff5722', '#181818'];
         let bgIndex = 0;
+
+        // ذخیره رنگ‌ها
+        let colors = {
+            text: '#ffffff',
+            badge: '#000000',
+            shadow: '#000000'
+        };
+        let activeColorTarget = 'text';
 
         function resizeCanvas() {
             const rect = canvas.parentElement.getBoundingClientRect();
@@ -697,9 +800,6 @@
             const badgePattern = document.getElementById('badgePatternSelect').value;
             const frameStyle = document.getElementById('frameStyleSelect') ? document.getElementById('frameStyleSelect').value : 'none';
             const rotationDeg = document.getElementById('rotationAngle') ? parseInt(document.getElementById('rotationAngle').value) : 0;
-            const textColor = document.getElementById('textColorPicker').value;
-            const badgeColor = document.getElementById('badgeColorPicker').value;
-            const shadowColor = document.getElementById('shadowColorPicker').value;
             const shadowBlur = parseInt(document.getElementById('shadowBlur').value);
             const opacity = parseFloat(document.getElementById('badgeOpacity').value);
             const paddingRatio = parseFloat(document.getElementById('badgePadding').value);
@@ -707,17 +807,16 @@
 
             ctx.save();
 
-            // اعمال زاویه چرخش کل محتوا
             if (rotationDeg !== 0) {
                 ctx.translate(canvas.width / 2, canvas.height / 2);
                 ctx.rotate((rotationDeg * Math.PI) / 180);
                 ctx.translate(-canvas.width / 2, -canvas.height / 2);
             }
 
-            // ۱. رسم کادر و فریم زیبایی
+            // ۱. فریم و کادر
             if (frameStyle !== 'none') {
                 ctx.save();
-                ctx.strokeStyle = textColor;
+                ctx.strokeStyle = colors.text;
                 ctx.lineWidth = 6;
                 const margin = 30;
                 if (frameStyle === 'simple') {
@@ -747,7 +846,7 @@
 
             const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);
 
-            // ۲. رسم برچسب (Badge)
+            // ۲. رسم برچسب
             if (badgeStyle !== 'none') {
                 lines.forEach((line, i) => {
                     const metrics = ctx.measureText(line || " ");
@@ -766,7 +865,7 @@
 
                     ctx.save();
                     ctx.globalAlpha = opacity;
-                    ctx.fillStyle = badgeColor;
+                    ctx.fillStyle = colors.badge;
                     ctx.beginPath();
 
                     if (badgeStyle === 'pill') {
@@ -786,7 +885,6 @@
                     }
                     ctx.fill();
 
-                    // پترن روی برچسب
                     if (badgePattern !== 'none') {
                         ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.18)');
                         ctx.fill();
@@ -795,11 +893,11 @@
                 });
             }
 
-            // ۳. تنظیمات سایه و رسم متن
-            ctx.shadowColor = shadowColor;
+            // ۳. متن و سایه
+            ctx.shadowColor = colors.shadow;
             ctx.shadowBlur = shadowBlur;
             ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;
-            ctx.fillStyle = textColor;
+            ctx.fillStyle = colors.text;
 
             lines.forEach((line, i) => {
                 const y = startY + (i * lineHeight);
@@ -817,6 +915,183 @@
             element.classList.add('active');
             document.fonts.load(`16px "${fontName}"`).then(() => render());
         }
+
+        /* عملکرد واقعی دکمه قلب (انتقال فونت لایک‌شده به ابتدای لیست) */
+        function toggleFavorite(event, heartIcon) {
+            event.stopPropagation();
+            const card = heartIcon.closest('.font-card');
+            const container = document.getElementById('fontCardsContainer');
+            
+            heartIcon.classList.toggle('active');
+            
+            if (heartIcon.classList.contains('active')) {
+                // انتقال به ابتدای لیست (بعد از دکمه ایمپورت)
+                const importCard = container.querySelector('.card-import');
+                container.insertBefore(card, importCard.nextSibling);
+                showToast('به علاقه‌مندی‌ها اضافه شد');
+            } else {
+                showToast('از علاقه‌مندی‌ها حذف شد');
+            }
+        }
+
+        /* اعمال استایل برچسب‌های آماده */
+        function applyBadgePreset(presetKey) {
+            if (presetKey === 'custom') return;
+
+            const badgeStyle = document.getElementById('badgeStyleSelect');
+            const badgePattern = document.getElementById('badgePatternSelect');
+            const opacity = document.getElementById('badgeOpacity');
+
+            if (presetKey === 'neon_dark') {
+                badgeStyle.value = 'rounded';
+                badgePattern.value = 'none';
+                colors.badge = '#111111';
+                colors.text = '#00ffff';
+                opacity.value = '0.95';
+            } else if (presetKey === 'soft_white') {
+                badgeStyle.value = 'pill';
+                badgePattern.value = 'none';
+                colors.badge = '#ffffff';
+                colors.text = '#000000';
+                opacity.value = '0.9';
+            } else if (presetKey === 'retro_stripes') {
+                badgeStyle.value = 'rect';
+                badgePattern.value = 'stripes';
+                colors.badge = '#e65100';
+                colors.text = '#ffffff';
+                opacity.value = '0.85';
+            } else if (presetKey === 'leaf_green') {
+                badgeStyle.value = 'leaf';
+                badgePattern.value = 'dots';
+                colors.badge = '#2e7d32';
+                colors.text = '#ffffff';
+                opacity.value = '0.9';
+            } else if (presetKey === 'cut_modern') {
+                badgeStyle.value = 'cut';
+                badgePattern.value = 'none';
+                colors.badge = '#d81b60';
+                colors.text = '#ffffff';
+                opacity.value = '1';
+            }
+
+            document.getElementById('btnTextColor').style.background = colors.text;
+            document.getElementById('btnBadgeColor').style.background = colors.badge;
+            render();
+        }
+
+        /* --- پیاده‌سازی پالت انتخاب رنگ طیف دایره‌ای --- */
+        const spectrumCanvas = document.getElementById('spectrumCanvas');
+        const sCtx = spectrumCanvas.getContext('2d');
+        const wheelCursor = document.getElementById('wheelCursor');
+        let selectedHue = 0;
+        let selectedSat = 0;
+
+        function drawSpectrumWheel() {
+            const width = spectrumCanvas.width;
+            const height = spectrumCanvas.height;
+            const cx = width / 2;
+            const cy = height / 2;
+            const radius = width / 2;
+
+            const imgData = sCtx.createImageData(width, height);
+            const data = imgData.data;
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const dx = x - cx;
+                    const dy = y - cy;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist <= radius) {
+                        let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                        if (angle < 0) angle += 360;
+
+                        const sat = dist / radius;
+                        const rgb = hslToRgb(angle / 360, sat, 0.5);
+
+                        const idx = (y * width + x) * 4;
+                        data[idx] = rgb[0];
+                        data[idx + 1] = rgb[1];
+                        data[idx + 2] = rgb[2];
+                        data[idx + 3] = 255;
+                    }
+                }
+            }
+            sCtx.putImageData(imgData, 0, 0);
+        }
+
+        function hslToRgb(h, s, l) {
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+        }
+
+        function openSpectrumPicker(target) {
+            activeColorTarget = target;
+            document.getElementById('colorPickerModal').classList.add('active');
+            drawSpectrumWheel();
+        }
+
+        function closeSpectrumPicker() {
+            document.getElementById('colorPickerModal').classList.remove('active');
+        }
+
+        function confirmSpectrumColor() {
+            const lum = document.getElementById('lumSlider').value / 100;
+            const alpha = document.getElementById('alphaSlider').value;
+            const rgb = hslToRgb(selectedHue / 360, selectedSat, lum);
+
+            let chosenHex = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+            if (alpha == 1) {
+                chosenHex = "#" + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).slice(1);
+            }
+
+            colors[activeColorTarget] = chosenHex;
+
+            if (activeColorTarget === 'text') document.getElementById('btnTextColor').style.background = chosenHex;
+            if (activeColorTarget === 'badge') document.getElementById('btnBadgeColor').style.background = chosenHex;
+            if (activeColorTarget === 'shadow') document.getElementById('btnShadowColor').style.background = chosenHex;
+
+            render();
+            closeSpectrumPicker();
+        }
+
+        spectrumCanvas.addEventListener('click', (e) => {
+            const rect = spectrumCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const cx = spectrumCanvas.width / 2;
+            const cy = spectrumCanvas.height / 2;
+            const dx = x - cx;
+            const dy = y - cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist <= cx) {
+                wheelCursor.style.left = `${x + spectrumCanvas.offsetLeft}px`;
+                wheelCursor.style.top = `${y + spectrumCanvas.offsetTop}px`;
+
+                let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                if (angle < 0) angle += 360;
+                selectedHue = angle;
+                selectedSat = dist / cx;
+            }
+        });
 
         document.getElementById('fontFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -877,23 +1152,24 @@
             if (alignState === 2) icon.className = "fa-solid fa-align-left";
             render();
         }
-function copyCanvasImage() {
-    canvas.toBlob(function(blob) {
 
-        var reader = new FileReader();
+        function copyCanvasImage() {
+            canvas.toBlob(function(blob) {
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    if (typeof Android !== 'undefined' && Android.copyImage) {
+                        Android.copyImage(reader.result);
+                    } else {
+                        showToast("تصویر کپی شد!");
+                    }
+                };
+                reader.readAsDataURL(blob);
+            }, "image/png");
+        }
 
-        reader.onloadend = function() {
-            Android.copyImage(reader.result);
-        };
-
-        reader.readAsDataURL(blob);
-
-    }, "image/png");
-}
-
-function copySuccess(){
-    showToast("تصویر کپی شد!");
-}
+        function copySuccess(){
+            showToast("تصویر کپی شد!");
+        }
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
