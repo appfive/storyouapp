@@ -878,16 +878,14 @@
             render();
         }
 
-        async function copyCanvasImage() {
-            try {
-                canvas.toBlob(async (blob) => {
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                    showToast('تصویر کپی شد!');
-                });
-            } catch (err) {
-                showToast('خطا در کپی تصویر');
-            }
+        function copyCanvasImage() {
+    canvas.toBlob(function(blob) {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            Android.copyImage(reader.result);
+        };
+        reader.readAsDataURL(blob);
+    }, "image/png");
         }
 
         function showToast(msg) {
