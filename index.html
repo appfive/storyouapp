@@ -1,331 +1,269 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>استوریو - ریلز</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet" />
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      overflow: hidden;
-      font-family: 'Vazir', sans-serif;
-      background: black;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استوری‌ساز حرفه‌ای</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fabric.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <!-- Vue.js 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts / Vazirmatn -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-    #container {
-      height: 100vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-
-    .reel {
-      position: relative;
-      height: 100vh;
-      scroll-snap-align: start;
-      overflow: hidden;
-    }
-
-    video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: filter 0.3s;
-    }
-
-    /* لوگو کوچک بالای هر ریل */
-    .top-text {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      z-index: 30;
-    }
-
-    .top-text img {
-      width: 40px;  /* اندازه کوچیک‌تر لوگو */
-      height: auto;
-      border-radius: 8px;
-      /* حاشیه و سایه حذف شد */
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: white;
-      padding: 20px;
-      background: linear-gradient(to top, rgba(0,0,0,0.4) 10%, transparent 90%);
-      pointer-events: none;
-    }
-
-    .bottom-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      pointer-events: auto;
-    }
-
-    .text-content {
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .app-name {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .app-name img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      /* حذف حاشیه سفید */
-      border: none;
-    }
-
-    .hashtag { color: #2196f3; }
-
-    .left-icons {
-      position: absolute;
-      left: 10px;
-      bottom: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .icon-btn img {
-      width: 30px;
-      height: 30px;
-      filter: drop-shadow(0 0 4px rgba(0,0,0,0.7));
-    }
-
-    .icon-btn + .icon-btn {
-      display: none;
-    }
-
-    .like-count {
-      color: white;
-      font-size: 13px;
-      opacity: 0.85;
-      font-weight: 600;
-      text-align: center;
-      margin-top: -8px;
-    }
-
-    .play-btn {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 50px;
-      background: rgba(0,0,0,0.4);
-      border: none;
-      color: white;
-      border-radius: 50%;
-      width: 80px; height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 20;
-    }
-
-    .play-btn.show { opacity: 1; }
-
-    .liked { animation: like-pop 0.3s ease; }
-
-    @keyframes like-pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.4); }
-      100% { transform: scale(1); }
-    }
-  </style>
-</head>
-<body>
-
-<div id="container">
-
-  <!-- ریل ۱ -->
-  <div class="reel">
-    <video src="https://cdn.jsdelivr.net/gh/appfive/videos/InShot_%DB%B2%DB%B0%DB%B2%DB%B5%DB%B0%DB%B7%DB%B1%DB%B8_%DB%B0%DB%B8%DB%B4%DB%B3%DB%B1%DB%B7%DB%B9%DB%B3%DB%B2.mp4" playsinline></video>
-    <div class="click-to-play" style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);color:white;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:25;cursor:pointer;">برای پخش کلیک کنید</div>
-    <button class="play-btn">▶</button>
-
-    <!-- لوگو کوچک بالا -->
-    <div class="top-text">
-      <img src="https://s6.uupload.ir/files/negar_1752818853971_dzns.png" alt="لوگو" />
-    </div>
-
-    <div class="overlay">
-      <div></div>
-      <div class="bottom-content">
-        <div class="text-content">
-          <div class="app-name">
-            <img src="https://i.pravatar.cc/100?img=47" alt="profile" />
-            <span>@storyou.app</span>
-          </div>
-          <div> استوریو شورتز معرفی شد!🔥✨ </div>
-          <div>#‌استوریو #شورتز</div>
-        </div>
-      </div>
-    </div>
-    <div class="left-icons">
-      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
-      <span class="like-count">2</span>
-    </div>
-  </div>
-
-  <!-- ریل ۲ -->
-  <div class="reel">
-    <video src="https://cdn.jsdelivr.net/gh/appfive/videos/c5fc62446418d3449efc2ac20ee68b9a58200991-360p.mp4" playsinline></video>
-    <button class="play-btn">▶</button>
-
-    <!-- لوگو کوچک بالا -->
-    <div class="top-text">
-      <img src="https://s6.uupload.ir/files/negar_1752818853971_dzns.png" alt="لوگو" />
-    </div>
-
-    <div class="overlay">
-      <div></div>
-      <div class="bottom-content">
-        <div class="text-content">
-          <div class="app-name">
-            <img src="https://i.pravatar.cc/100?img=22" alt="profile" />
-            <span>@storyou.app</span>
-          </div>
-          <div>ویدیویی جالب از پرسیدن پایتخت کشور ها توسط معلم</div>
-          <div>#معلم #پایتخت</div>
-        </div>
-      </div>
-    </div>
-    <div class="left-icons">
-      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
-      <span class="like-count">2</span>
-    </div>
-  </div>
-
-  <!-- ریل ۳ -->
-  <div class="reel">
-    <video src="https://cdn.jsdelivr.net/gh/appfive/videos/165d11f00bc56af441da8871920e529e61156823-240p.mp4" playsinline></video>
-    <button class="play-btn">▶</button>
-
-    <!-- لوگو کوچک بالا -->
-    <div class="top-text">
-      <img src="https://s6.uupload.ir/files/negar_1752818853971_dzns.png" alt="لوگو" />
-    </div>
-
-    <div class="overlay">
-      <div></div>
-      <div class="bottom-content">
-        <div class="text-content">
-          <div class="app-name">
-            <img src="https://i.pravatar.cc/100?img=15" alt="profile" />
-            <span>@storyou.app</span>
-          </div>
-          <div>لذت بیرون کشیدن طلا از دل طبیعت 🔥🌲</div>
-          <div>#طبیعت #طلا</div>
-        </div>
-      </div>
-    </div>
-    <div class="left-icons">
-      <button class="icon-btn like-btn"><img src="https://s6.uupload.ir/files/negar_1752564553006_r285.png"></button>
-      <span class="like-count">2</span>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  document.querySelectorAll('.reel').forEach((reel, index) => {
-    const video = reel.querySelector('video');
-    const playBtn = reel.querySelector('.play-btn');
-    const likeBtn = reel.querySelector('.like-btn img');
-    const likeCountEl = reel.querySelector('.like-count');
-    let liked = false;
-    let likeCount = parseInt(likeCountEl.textContent);
-
-    const clickToPlay = reel.querySelector('.click-to-play');
-    if (clickToPlay && index === 0) {
-      clickToPlay.addEventListener('click', () => {
-        clickToPlay.remove();
-        video.play();
-      });
-    } else if (clickToPlay && index !== 0) {
-      clickToPlay.remove();
-    }
-
-    new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          video.play().catch(()=>{});
-        } else {
-          video.pause();
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
         }
-      });
-    }, { threshold: 0.8 }).observe(reel);
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .canvas-container {
+            margin: 0 auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col justify-between overflow-hidden">
 
-    video.addEventListener('pause', () => playBtn.classList.add('show'));
-    video.addEventListener('play', () => playBtn.classList.remove('show'));
+    <div id="app" class="flex flex-col h-full">
+        <!-- Header -->
+        <header class="glass px-6 py-4 flex justify-between items-center z-10">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+                <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>استوری‌ساز فارسی
+            </h1>
+            <div class="flex gap-3">
+                <button @click="downloadStory" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-5 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> دانلود خروجی
+                </button>
+            </div>
+        </header>
 
-    video.addEventListener('click', () => video.paused ? video.play() : video.pause());
-    playBtn.addEventListener('click', () => video.play());
+        <!-- Main Content -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- Sidebar: Tools & Templates -->
+            <aside class="w-80 glass p-4 flex flex-col gap-6 overflow-y-auto">
+                <!-- Add Elements -->
+                <div>
+                    <h2 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">افزودن عناصر</h2>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button @click="addText" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg flex flex-col items-center justify-center gap-2 border border-slate-700 transition">
+                            <i class="fa-solid fa-font text-lg text-pink-400"></i>
+                            <span class="text-xs">متن جدید</span>
+                        </button>
+                        <label class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg flex flex-col items-center justify-center gap-2 border border-slate-700 transition cursor-pointer">
+                            <i class="fa-solid fa-image text-lg text-purple-400"></i>
+                            <span class="text-xs">آپلود تصویر</span>
+                            <input type="file" @change="uploadImage" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+                </div>
 
-    likeBtn.parentElement.addEventListener('click', e => {
-      e.preventDefault();
-      liked = !liked;
-      likeBtn.src = liked
-        ? "https://s6.uupload.ir/files/negar_1752564560024_nnku.png"
-        : "https://s6.uupload.ir/files/negar_1752564553006_r285.png";
-      likeBtn.classList.add('liked');
-      setTimeout(()=>likeBtn.classList.remove('liked'),300);
-      likeCount += liked ? 1 : -1;
-      likeCountEl.textContent = likeCount;
-    });
+                <!-- Canvas Background Color -->
+                <div>
+                    <h2 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">رنگ پس‌زمینه</h2>
+                    <div class="flex gap-2">
+                        <input type="color" v-model="bgColor" @change="changeBgColor" class="w-10 h-10 rounded cursor-pointer bg-transparent border-0">
+                        <div class="flex gap-1 flex-1">
+                            <button v-for="color in presetColors" :key="color" @click="setBgColor(color)" class="w-8 h-8 rounded-full border border-slate-600" :style="{ backgroundColor: color }"></button>
+                        </div>
+                    </div>
+                </div>
 
-    const txt = reel.querySelector('.text-content');
-    txt.innerHTML = txt.innerHTML.replace(/(#\S+)/g, '<span class="hashtag">$1</span>');
-  });
+                <!-- Templates -->
+                <div>
+                    <h2 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">قالب‌های آماده</h2>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button v-for="(tpl, index) in templates" :key="index" @click="applyTemplate(tpl)" class="p-3 bg-slate-800 hover:bg-slate-700 rounded-lg text-right border border-slate-700 transition">
+                            <div class="text-xs font-medium text-slate-200">{{ tpl.name }}</div>
+                        </button>
+                    </div>
+                </div>
 
-  const container = document.getElementById('container');
-  let scrolling = false;
-  container.addEventListener('wheel', e => {
-    if(scrolling) return;
-    scrolling = true;
-    const reels = Array.from(document.querySelectorAll('.reel'));
-    const current = reels.findIndex(r => {
-      const rect = r.getBoundingClientRect();
-      return rect.top >= -30 && rect.top <= 30;
-    });
-    let next = (e.deltaY > 0)
-      ? Math.min(reels.length - 1, current + 1)
-      : Math.max(0, current - 1);
-    reels[next].scrollIntoView({behavior: 'instant'});
-    setTimeout(() => {
-      reels[next].querySelector('video')?.play().catch(() => {});
-      scrolling = false;
-    }, 300);
-  });
-</script>
-<BLOGFA>
+                <!-- Selected Object Controls -->
+                <div v-if="selectedObject" class="border-t border-slate-700 pt-4">
+                    <h2 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">تنظیمات عنصر انتخابی</h2>
+                    <div v-if="selectedObject.type === 'i-text'" class="space-y-3">
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">رنگ متن</label>
+                            <input type="color" v-model="textColor" @change="changeTextColor" class="w-full h-8 rounded bg-transparent cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 block mb-1">اندازه فونت</label>
+                            <input type="range" min="12" max="120" v-model="fontSize" @input="changeFontSize" class="w-full">
+                        </div>
+                    </div>
+                    <button @click="deleteSelected" class="w-full mt-4 p-2 bg-red-500/20 text-red-400 hover:bg-red-500/30 rounded-lg text-xs font-semibold transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-trash"></i> حذف عنصر
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Workspace / Canvas Area -->
+            <main class="flex-1 flex items-center justify-center p-6 bg-slate-950 overflow-auto">
+                <div class="relative">
+                    <canvas id="storyCanvas"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const canvas = ref(null);
+                const selectedObject = ref(null);
+                const bgColor = ref('#ffffff');
+                const textColor = ref('#000000');
+                const fontSize = ref(40);
+
+                const presetColors = ['#ffffff', '#000000', '#f43f5e', '#8b5cf6', '#06b6d4', '#10b981'];
+
+                const templates = [
+                    { name: 'مینیمال روشن', bg: '#f8fafc', text: 'عنوان استوری شما', textColor: '#0f172a' },
+                    { name: 'مدرن تاریک', bg: '#0f172a', text: 'پیشنهاد ویژه امروز', textColor: '#f8fafc' },
+                    { name: 'جذاب ارغوانی', bg: '#581c87', text: 'تخفیف شگفت‌انگیز', textColor: '#fef08a' },
+                    { name: 'تکست جادویی', bg: '#831843', text: 'داستان جدید...', textColor: '#fbcfe8' }
+                ];
+
+                onMounted(() => {
+                    // Initialize Fabric Canvas (Instagram Story Aspect Ratio: 9:16)
+                    canvas.value = new fabric.Canvas('storyCanvas', {
+                        width: 360,
+                        height: 640,
+                        backgroundColor: '#ffffff'
+                    });
+
+                    canvas.value.on('selection:created', updateSelection);
+                    canvas.value.on('selection:updated', updateSelection);
+                    canvas.value.on('selection:cleared', () => { selectedObject.value = null; });
+                });
+
+                const updateSelection = (e) => {
+                    selectedObject.value = e.selected[0];
+                    if (selectedObject.value && selectedObject.value.type === 'i-text') {
+                        textColor.value = selectedObject.value.fill;
+                        fontSize.value = selectedObject.value.fontSize;
+                    }
+                };
+
+                const addText = () => {
+                    const text = new fabric.IText('متن خود را وارد کنید', {
+                        left: 50,
+                        top: 250,
+                        fontFamily: 'Vazirmatn',
+                        fill: '#000000',
+                        fontSize: 32,
+                        direction: 'rtl'
+                    });
+                    canvas.value.add(text);
+                    canvas.value.setActiveObject(text);
+                };
+
+                const uploadImage = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (f) => {
+                        fabric.Image.fromURL(f.target.result, (img) => {
+                            img.scaleToWidth(250);
+                            canvas.value.add(img);
+                            canvas.value.centerObject(img);
+                            canvas.value.setActiveObject(img);
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                const changeBgColor = () => {
+                    canvas.value.setBackgroundColor(bgColor.value, canvas.value.renderAll.bind(canvas.value));
+                };
+
+                const setBgColor = (color) => {
+                    bgColor.value = color;
+                    changeBgColor();
+                };
+
+                const changeTextColor = () => {
+                    if (selectedObject.value && selectedObject.value.type === 'i-text') {
+                        selectedObject.value.set('fill', textColor.value);
+                        canvas.value.renderAll();
+                    }
+                };
+
+                const changeFontSize = () => {
+                    if (selectedObject.value && selectedObject.value.type === 'i-text') {
+                        selectedObject.value.set('fontSize', parseInt(fontSize.value));
+                        canvas.value.renderAll();
+                    }
+                };
+
+                const deleteSelected = () => {
+                    const activeObjects = canvas.value.getActiveObjects();
+                    canvas.value.discardActiveObject();
+                    activeObjects.forEach((obj) => {
+                        canvas.value.remove(obj);
+                    });
+                };
+
+                const applyTemplate = (tpl) => {
+                    canvas.value.clear();
+                    setBgColor(tpl.bg);
+                    const text = new fabric.IText(tpl.text, {
+                        left: 40,
+                        top: 280,
+                        fontFamily: 'Vazirmatn',
+                        fill: tpl.textColor,
+                        fontSize: 36,
+                        direction: 'rtl'
+                    });
+                    canvas.value.add(text);
+                };
+
+                const downloadStory = () => {
+                    const dataURL = canvas.value.toDataURL({
+                        format: 'png',
+                        quality: 1,
+                        multiplier: 3 // Higher resolution export
+                    });
+                    const link = document.createElement('a');
+                    link.download = 'story.png';
+                    link.href = dataURL;
+                    link.click();
+                };
+
+                return {
+                    addText,
+                    uploadImage,
+                    bgColor,
+                    changeBgColor,
+                    presetColors,
+                    setBgColor,
+                    templates,
+                    applyTemplate,
+                    selectedObject,
+                    textColor,
+                    changeTextColor,
+                    fontSize,
+                    changeFontSize,
+                    deleteSelected,
+                    downloadStory
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
