@@ -879,6 +879,7 @@
         }
 function copyCanvasImage() {
     canvas.toBlob(function(blob) {
+
         var reader = new FileReader();
 
         reader.onloadend = function() {
@@ -890,10 +891,9 @@ function copyCanvasImage() {
     }, "image/png");
 }
 
-
 function copySuccess(){
     showToast("تصویر کپی شد!");
-        }
+}
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
