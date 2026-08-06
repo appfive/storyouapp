@@ -513,22 +513,22 @@
 
                     <!-- کارت‌های فونت با پیش‌نمایش واقعی خود فونت -->
                     <div class="font-card active" onclick="selectFont('Vazirmatn', this)">
-                        <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
+                        <span class="font-card-title" style="font-family: 'Vazirmatn';">سینما</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Lalezar', this)">
-                        <span class="font-card-title" style="font-family: 'Lalezar';">لاله‌زار</span>
+                        <span class="font-card-title" style="font-family: 'Lalezar';">بنیاد</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Samim', this)">
-                        <span class="font-card-title" style="font-family: 'Samim';">سمین</span>
+                        <span class="font-card-title" style="font-family: 'Samim';">برق</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Shabnam', this)">
-                        <span class="font-card-title" style="font-family: 'Shabnam';">شبنم</span>
+                        <span class="font-card-title" style="font-family: 'Shabnam';">کپسول</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
@@ -591,4 +591,275 @@
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
-                    <input type="color" id="textColorPicker" value="#22
+                    <input type="color" id="textColorPicker" value="#222222" onchange="render()" class="color-picker-circle">
+                    <span>رنگ برچسب:</span>
+                    <input type="color" id="badgeColorPicker" value="#ffffff" onchange="render()" class="color-picker-circle">
+                    <span>رنگ سایه:</span>
+                    <input type="color" id="shadowColorPicker" value="#000000" onchange="render()" class="color-picker-circle">
+                </div>
+                <div class="control-row">
+                    <label>میزان سایه:</label>
+                    <input type="range" id="shadowBlur" min="0" max="30" value="0" oninput="render()">
+                    <label>فاصله خطوط:</label>
+                    <input type="range" id="lineHeightSlider" min="1" max="2" step="0.1" value="1.3" oninput="render()">
+                </div>
+            </div>
+
+            <!-- تب ۴: افزودن استیکر -->
+            <div class="sub-panel" id="tabContentStickers">
+                <div class="emoji-grid">
+                    <button class="emoji-btn" onclick="addEmoji('✨')">✨</button>
+                    <button class="emoji-btn" onclick="addEmoji('🔥')">🔥</button>
+                    <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
+                    <button class="emoji-btn" onclick="addEmoji('👑')">👑</button>
+                    <button class="emoji-btn" onclick="addEmoji('💎')">💎</button>
+                    <button class="emoji-btn" onclick="addEmoji('📍')">📍</button>
+                    <button class="emoji-btn" onclick="addEmoji('⚡')">⚡</button>
+                </div>
+            </div>
+
+            <!-- نوار تب‌های اصلی پایین بدون انیمیشن -->
+            <div class="main-tabs">
+                <button class="main-tab-item active" onclick="switchMainTab('fonts', this)">فونت</button>
+                <button class="main-tab-item" onclick="switchMainTab('style', this)">استایل</button>
+                <button class="main-tab-item" onclick="switchMainTab('color', this)">رنگ & سایه</button>
+                <button class="main-tab-item" onclick="switchMainTab('stickers', this)">استیکر</button>
+            </div>
+        </div>
+
+        <!-- مدال ویرایش متن -->
+        <div class="text-modal" id="textModal">
+            <button class="text-modal-close" onclick="closeTextModal()">تایید</button>
+            <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const mainTextInput = document.getElementById('mainTextInput');
+        const sliderSize = document.getElementById('sliderSize');
+
+        let currentText = "متنتو بنویس...";
+        let currentFont = "Vazirmatn";
+        let alignState = 0; // 0: center, 1: right, 2: left
+        let bgColors = ['#e91e63', '#8e24aa', '#3f51b5', '#009688', '#ff5722', '#181818'];
+        let bgIndex = 0;
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * 2;
+            canvas.height = rect.height * 2;
+            render();
+        }
+
+        function createPattern(patternType, colorHex) {
+            const pCanvas = document.createElement('canvas');
+            pCanvas.width = 16;
+            pCanvas.height = 16;
+            const pCtx = pCanvas.getContext('2d');
+            pCtx.strokeStyle = colorHex;
+            pCtx.lineWidth = 2;
+
+            if (patternType === 'stripes') {
+                pCtx.beginPath();
+                pCtx.moveTo(0, 16); pCtx.lineTo(16, 0);
+                pCtx.stroke();
+            } else if (patternType === 'dots') {
+                pCtx.fillStyle = colorHex;
+                pCtx.beginPath();
+                pCtx.arc(8, 8, 2.5, 0, Math.PI * 2);
+                pCtx.fill();
+            }
+            return ctx.createPattern(pCanvas, 'repeat');
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const fontSize = parseInt(sliderSize.value) * 2;
+            const badgeStyle = document.getElementById('badgeStyleSelect').value;
+            const badgePattern = document.getElementById('badgePatternSelect').value;
+            const textColor = document.getElementById('textColorPicker').value;
+            const badgeColor = document.getElementById('badgeColorPicker').value;
+            const shadowColor = document.getElementById('shadowColorPicker').value;
+            const shadowBlur = parseInt(document.getElementById('shadowBlur').value);
+            const opacity = parseFloat(document.getElementById('badgeOpacity').value);
+            const paddingRatio = parseFloat(document.getElementById('badgePadding').value);
+            const lineHeightFactor = parseFloat(document.getElementById('lineHeightSlider').value);
+
+            ctx.save();
+            ctx.font = `700 ${fontSize}px "${currentFont}", sans-serif`;
+            ctx.direction = 'rtl';
+            ctx.textAlign = alignState === 0 ? 'center' : (alignState === 1 ? 'right' : 'left');
+            ctx.textBaseline = 'middle';
+
+            const lines = currentText.split('\n');
+            const lineHeight = fontSize * lineHeightFactor;
+            const totalHeight = lines.length * lineHeight;
+            
+            let centerX = canvas.width / 2;
+            if (alignState === 1) centerX = canvas.width * 0.85;
+            if (alignState === 2) centerX = canvas.width * 0.15;
+
+            const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);
+
+            // 1. رسم برچسب (Badge)
+            if (badgeStyle !== 'none') {
+                lines.forEach((line, i) => {
+                    const metrics = ctx.measureText(line || " ");
+                    const textWidth = metrics.width;
+                    const y = startY + (i * lineHeight);
+                    const paddingX = fontSize * paddingRatio;
+                    const paddingY = fontSize * 0.18;
+                    const boxW = textWidth + (paddingX * 2);
+                    const boxH = fontSize + (paddingY * 2);
+                    
+                    let boxX = centerX - (boxW / 2);
+                    if (alignState === 1) boxX = centerX - boxW;
+                    if (alignState === 2) boxX = centerX;
+
+                    const boxY = y - (boxH / 2);
+
+                    ctx.save();
+                    ctx.globalAlpha = opacity;
+                    ctx.fillStyle = badgeColor;
+                    ctx.beginPath();
+
+                    if (badgeStyle === 'pill') {
+                        ctx.roundRect(boxX, boxY, boxW, boxH, boxH / 2);
+                    } else if (badgeStyle === 'rounded') {
+                        ctx.roundRect(boxX, boxY, boxW, boxH, 14);
+                    } else {
+                        ctx.rect(boxX, boxY, boxW, boxH);
+                    }
+                    ctx.fill();
+
+                    // پترن روی برچسب
+                    if (badgePattern !== 'none') {
+                        ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.15)');
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                });
+            }
+
+            // 2. تنظیمات سایه و رسم متن
+            ctx.shadowColor = shadowColor;
+            ctx.shadowBlur = shadowBlur;
+            ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;
+            ctx.fillStyle = textColor;
+
+            lines.forEach((line, i) => {
+                const y = startY + (i * lineHeight);
+                ctx.fillText(line, centerX, y);
+            });
+
+            ctx.restore();
+        }
+
+        document.fonts.ready.then(() => render());
+
+        function selectFont(fontName, element) {
+            currentFont = fontName;
+            document.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            document.fonts.load(`16px "${fontName}"`).then(() => render());
+        }
+
+        document.getElementById('fontFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const fontName = 'CustomFont_' + Date.now();
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const font = new FontFace(fontName, evt.target.result);
+                    font.load().then(function(loadedFont) {
+                        document.fonts.add(loadedFont);
+                        currentFont = fontName;
+                        showToast('فونت بارگذاری شد');
+                        render();
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        function switchMainTab(tabName, btn) {
+            document.querySelectorAll('.main-tab-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('tabContentFonts').style.display = (tabName === 'fonts') ? 'block' : 'none';
+            document.getElementById('tabContentStyle').classList.toggle('active', tabName === 'style');
+            document.getElementById('tabContentColor').classList.toggle('active', tabName === 'color');
+            document.getElementById('tabContentStickers').classList.toggle('active', tabName === 'stickers');
+        }
+
+        function openTextModal() {
+            document.getElementById('textModal').classList.add('active');
+            mainTextInput.focus();
+        }
+
+        function closeTextModal() {
+            currentText = mainTextInput.value || " ";
+            document.getElementById('textModal').classList.remove('active');
+            render();
+        }
+
+        function clearText() {
+            currentText = "";
+            mainTextInput.value = "";
+            render();
+            openTextModal();
+        }
+
+        function addEmoji(emoji) {
+            currentText = emoji + "\n" + currentText;
+            mainTextInput.value = currentText;
+            render();
+        }
+
+        function changeBgColor() {
+            bgIndex = (bgIndex + 1) % bgColors.length;
+            document.querySelector('.phone-container').style.backgroundColor = bgColors[bgIndex];
+        }
+
+        function toggleAlign() {
+            alignState = (alignState + 1) % 3;
+            const icon = document.getElementById('alignIcon');
+            if (alignState === 0) icon.className = "fa-solid fa-align-center";
+            if (alignState === 1) icon.className = "fa-solid fa-align-right";
+            if (alignState === 2) icon.className = "fa-solid fa-align-left";
+            render();
+        }
+
+        async function copyCanvasImage() {
+            try {
+                canvas.toBlob(async (blob) => {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    await navigator.clipboard.write([item]);
+                    showToast('تصویر کپی شد!');
+                });
+            } catch (err) {
+                showToast('خطا در کپی تصویر');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        sliderSize.addEventListener('input', render);
+        mainTextInput.addEventListener('input', () => {
+            currentText = mainTextInput.value;
+            render();
+        });
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', resizeCanvas);
+    </script>
+</body>
+</html>
