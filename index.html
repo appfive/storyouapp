@@ -75,7 +75,7 @@
             }
         }
 
-        /* نوار بالایی */
+        /* 1. نوار بالایی بدون تنظیمات */
         .top-bar {
             display: flex;
             align-items: center;
@@ -133,7 +133,7 @@
             backdrop-filter: blur(4px);
         }
 
-        /* بوم اصلی نمایش */
+        /* 2. بوم اصلی نمایش */
         .workspace {
             flex: 1;
             position: relative;
@@ -204,7 +204,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
-        /* پنل پایین */
+        /* 3. پنل پایین */
         .bottom-panel {
             background: transparent;
             display: flex;
@@ -456,7 +456,7 @@
         <!-- پیام توست -->
         <div class="toast" id="toast">متن در کلیپ بورد کپی شد</div>
 
-        <!-- نوار بالایی -->
+        <!-- 1. نوار بالایی بدون تنظیمات -->
         <div class="top-bar">
             <div class="top-icons-right">
                 <button class="icon-btn" onclick="showToast('راهنما')"><i class="fa-solid fa-circle-question"></i></button>
@@ -473,7 +473,7 @@
             شما از یک پس زمینه قفل استفاده کرده اید، برای کپی ارتقاء دهید
         </div>
 
-        <!-- بوم اصلی Workspace -->
+        <!-- 2. بوم اصلی Workspace -->
         <div class="workspace">
             <canvas id="canvas"></canvas>
 
@@ -490,7 +490,7 @@
             </div>
         </div>
 
-        <!-- پنل تنظیمات زیرین -->
+        <!-- 3. پنل تنظیمات زیرین -->
         <div class="bottom-panel">
             
             <!-- تب ۱: فونت‌ها -->
@@ -511,24 +511,24 @@
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     </div>
 
-                    <!-- کارت‌های فونت -->
+                    <!-- کارت‌های فونت با پیش‌نمایش واقعی خود فونت -->
                     <div class="font-card active" onclick="selectFont('Vazirmatn', this)">
-                        <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
+                        <span class="font-card-title" style="font-family: 'Vazirmatn';">سینما</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Lalezar', this)">
-                        <span class="font-card-title" style="font-family: 'Lalezar';">لاله‌زار</span>
+                        <span class="font-card-title" style="font-family: 'Lalezar';">بنیاد</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Samim', this)">
-                        <span class="font-card-title" style="font-family: 'Samim';">سمین</span>
+                        <span class="font-card-title" style="font-family: 'Samim';">برق</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
                     <div class="font-card" onclick="selectFont('Shabnam', this)">
-                        <span class="font-card-title" style="font-family: 'Shabnam';">شبنم</span>
+                        <span class="font-card-title" style="font-family: 'Shabnam';">کپسول</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
@@ -559,7 +559,7 @@
                 </div>
             </div>
 
-            <!-- تب ۲: استایل و برچسب -->
+            <!-- تب ۲: استایل و برچسب پیشرفته -->
             <div class="sub-panel" id="tabContentStyle">
                 <div class="control-row">
                     <label>طرح برچسب:</label>
@@ -587,9 +587,8 @@
                 </div>
             </div>
 
-            <!-- تب ۳: رنگ و سایه -->
+            <!-- تب ۳: رنگ و افکت -->
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
-                    <input type="color" id="textColorPicker" value="#222222" onchange="render()" class="color-picker-circle">
-                    <span
+                    <input type="color" id="textColorPicker" value="#22
