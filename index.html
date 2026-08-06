@@ -513,7 +513,7 @@
                     </div>
 
                     <div class="font-card" onclick="selectFont('Lalezar', this)">
-                        <span class="font-card-title" style="font-family: 'Lalezar';">تست لاله‌زار</span>
+                        <span class="font-card-title" style="font-family: 'Lalezar';">لاله‌زار</span>
                         <i class="fa-regular fa-heart font-card-heart"></i>
                     </div>
 
@@ -877,15 +877,22 @@
             if (alignState === 2) icon.className = "fa-solid fa-align-left";
             render();
         }
-
-        function copyCanvasImage() {
+function copyCanvasImage() {
     canvas.toBlob(function(blob) {
         var reader = new FileReader();
+
         reader.onloadend = function() {
             Android.copyImage(reader.result);
         };
+
         reader.readAsDataURL(blob);
+
     }, "image/png");
+}
+
+
+function copySuccess(){
+    showToast("تصویر کپی شد!");
         }
 
         function showToast(msg) {
