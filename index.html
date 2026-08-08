@@ -1153,23 +1153,34 @@
             render();
         }
 
-   function copyCanvasImage() {
+function copyCanvasImage() {
     try {
-        // دریافت مستقیم عکس به صورت Base64
-        var base64Image = canvas.toDataURL("image/png");
+        // ساخت یک بوم موقت برای جلوگیری از خطای امنیتی Cross-Origin
+        var tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        var tempCtx = tempCanvas.getContext('2d');
+        
+        // کشیدن محتوای بوم اصلی روی بوم جدید
+        tempCtx.drawImage(canvas, 0, 0);
 
-        // بررسی و فراخوانی ارتباط با اسکچوار
-        if (typeof Android !== 'undefined' && Android.copyImage) {
-            Android.copyImage(base64Image);
-        } else if (window.Android && window.Android.copyImage) {
+        // گرفتن خروجی Base64
+        var base64Image = tempCanvas.toDataURL("image/png");
+
+        // ارسال به اپلیکیشن اندروید
+        if (window.Android && typeof window.Android.copyImage === 'function') {
             window.Android.copyImage(base64Image);
+        } else if (typeof Android !== 'undefined' && Android.copyImage) {
+            Android.copyImage(base64Image);
         } else {
             showToast("ارتباط با اپلیکیشن برقرار نشد!");
         }
     } catch (e) {
-        alert("خطای بوم: " + e.message);
+        // اگر هنوز خطایی وجود داشته باشه پیامش رو نشون میده
+        showToast("خطا در ساخت تصویر: " + e.message);
     }
-   }
+}
+
         
 
         function showToast(msg) {
