@@ -131,12 +131,18 @@
             background: rgba(255, 255, 255, 0.35);
         }
 
+        .btn-action-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
         .btn-copy-main {
             background: #ffffff;
             color: #000000;
             font-weight: 800;
-            font-size: 0.88rem;
-            padding: 8px 18px;
+            font-size: 0.78rem;
+            padding: 8px 12px;
             border-radius: 12px;
             border: none;
             cursor: pointer;
@@ -195,7 +201,7 @@
             font-size: 0.85rem;
         }
 
-        /* اسلایدر عمودی اندازه سمت راست - جابجاشده به راست‌تر */
+        /* اسلایدر عمودی اندازه سمت راست */
         .vertical-slider-wrap {
             position: absolute;
             right: 2px;
@@ -240,7 +246,6 @@
             z-index: 10;
         }
 
-        /* فیلترها - فقط All باقی مانده است */
         .filter-tags {
             display: flex;
             gap: 8px;
@@ -258,7 +263,6 @@
             cursor: pointer;
         }
 
-        /* کارت‌های افقی فونت */
         .font-cards-scroll {
             display: flex;
             gap: 10px;
@@ -328,7 +332,6 @@
             transform: scale(1.15);
         }
 
-        /* تب‌های اصلی سفلی */
         .main-tabs {
             display: flex;
             justify-content: space-around;
@@ -362,7 +365,6 @@
             border-radius: 2px;
         }
 
-        /* پنل‌های تنظیمات زیرین */
         .sub-panel {
             display: none;
             padding: 8px 16px;
@@ -390,7 +392,6 @@
             outline: none;
         }
 
-        /* دکمه بازکننده طیف رنگ دایره‌ای */
         .color-preview-btn {
             width: 28px;
             height: 28px;
@@ -401,7 +402,6 @@
             display: inline-block;
         }
 
-        /* مدال طیف رنگ دایره‌ای */
         .color-picker-modal {
             position: absolute;
             inset: 0;
@@ -474,7 +474,6 @@
         .picker-btn-confirm { background: #ffffff; color: #000; }
         .picker-btn-cancel { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* مدال ویرایش متن */
         .text-modal {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -513,7 +512,6 @@
             cursor: pointer;
         }
 
-        /* توست پیام */
         .toast {
             position: absolute;
             top: 60px;
@@ -538,17 +536,19 @@
 
     <div class="phone-container">
         <!-- پیام توست -->
-        <div class="toast" id="toast">متن در کلیپ بورد کپی شد</div>
+        <div class="toast" id="toast">پیام سیستم</div>
 
-        <!-- 1. نوار بالایی بدون تنظیمات -->
+        <!-- 1. نوار بالایی -->
         <div class="top-bar">
             <div class="top-icons-right">
                 <button class="icon-btn" onclick="showToast('راهنما')"><i class="fa-solid fa-circle-question"></i></button>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div class="btn-action-group">
                 <button class="icon-btn" onclick="showToast('تاریخچه')"><i class="fa-solid fa-clock-rotate-left"></i></button>
                 <button class="icon-btn" onclick="changeBgColor()"><i class="fa-solid fa-circle-half-stroke"></i></button>
-                <button class="btn-copy-main" onclick="copyCanvasImage()">کپی فونت</button>
+                <button class="btn-copy-main" onclick="copyTextToClipboard()">کپی متن</button>
+                <button class="btn-copy-main" onclick="copyCanvasImage()">کپی تصویر</button>
+                <button class="btn-copy-main" onclick="saveImageToGallery()"><i class="fa-solid fa-download"></i></button>
             </div>
         </div>
 
@@ -568,7 +568,7 @@
                 <button class="action-circle-btn" onclick="openTextModal()"><i class="fa-solid fa-pen"></i></button>
             </div>
 
-            <!-- اسلایدر اندازه سمت راست (دامنه بیشتر و جابجا شده به راست) -->
+            <!-- اسلایدر اندازه سمت راست -->
             <div class="vertical-slider-wrap">
                 <input type="range" class="vertical-slider" id="sliderSize" min="5" max="180" value="55">
             </div>
@@ -591,7 +591,7 @@
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     </label>
 
-                    <!-- کارت‌های فونت جدید -->
+                    <!-- کارت‌های فونت -->
                     <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">
                         <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
@@ -617,7 +617,6 @@
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
-                    <!-- کارت‌های فونت قبلی -->
                     <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">
                         <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
@@ -698,7 +697,7 @@
                 </div>
             </div>
 
-            <!-- تب ۳: رنگ و سایه (همراه پالت طیف دایره‌ای) -->
+            <!-- تب ۳: رنگ و سایه -->
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
@@ -718,7 +717,7 @@
                 </div>
             </div>
 
-            <!-- تب ۴: برچسب آماده (جایگزین زیباسازی) -->
+            <!-- تب ۴: برچسب آماده -->
             <div class="sub-panel" id="tabContentBeauty">
                 <div class="control-row">
                     <label>برچسب آماده:</label>
@@ -754,7 +753,7 @@
             </div>
         </div>
 
-        <!-- مدال طیف انتخاب رنگ دایره‌ای -->
+        <!-- مدال طیف انتخاب رنگ -->
         <div class="color-picker-modal" id="colorPickerModal">
             <canvas class="spectrum-wheel" id="spectrumCanvas" width="220" height="220"></canvas>
             <div class="wheel-cursor" id="wheelCursor"></div>
@@ -775,14 +774,6 @@
                 <button class="picker-btn picker-btn-confirm" onclick="confirmSpectrumColor()">تایید</button>
             </div>
         </div>
-
-        <!-- مدال ویرایش متن -->
-        <div class="text-modal" id="textModal">
-            <button class="text-modal-close" onclick="closeTextModal()">تایید</button>
-            <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
-        </div>
-    </div>
-
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -795,7 +786,6 @@
         let bgColors = ['#1976d2', '#8e24aa', '#e91e63', '#009688', '#ff5722', '#181818'];
         let bgIndex = 0;
 
-        // ذخیره رنگ‌ها
         let colors = {
             text: '#ffffff',
             badge: '#000000',
@@ -864,7 +854,6 @@
                 ctx.translate(-canvas.width / 2, -canvas.height / 2);
             }
 
-            // ۱. فریم و کادر
             if (frameStyle !== 'none') {
                 ctx.save();
                 ctx.strokeStyle = colors.text;
@@ -897,7 +886,6 @@
 
             const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);
 
-            // ۲. رسم برچسب
             if (badgeStyle !== 'none') {
                 lines.forEach((line, i) => {
                     const metrics = ctx.measureText(line || " ");
@@ -944,7 +932,6 @@
                 });
             }
 
-            // ۳. متن و سایه
             ctx.shadowColor = colors.shadow;
             ctx.shadowBlur = shadowBlur;
             ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;
@@ -967,7 +954,6 @@
             document.fonts.load(`16px "${fontName}"`).then(() => render());
         }
 
-        /* عملکرد واقعی دکمه قلب (انتقال فونت لایک‌شده به ابتدای لیست) */
         function toggleFavorite(event, heartIcon) {
             event.stopPropagation();
             const card = heartIcon.closest('.font-card');
@@ -976,7 +962,6 @@
             heartIcon.classList.toggle('active');
             
             if (heartIcon.classList.contains('active')) {
-                // انتقال به ابتدای لیست (بعد از دکمه ایمپورت)
                 const importCard = container.querySelector('.card-import');
                 container.insertBefore(card, importCard.nextSibling);
                 showToast('به علاقه‌مندی‌ها اضافه شد');
@@ -985,7 +970,6 @@
             }
         }
 
-        /* اعمال استایل برچسب‌های آماده */
         function applyBadgePreset(presetKey) {
             if (presetKey === 'custom') return;
 
@@ -1030,7 +1014,6 @@
             render();
         }
 
-        /* --- پیاده‌سازی پالت انتخاب رنگ طیف دایره‌ای --- */
         const spectrumCanvas = document.getElementById('spectrumCanvas');
         const sCtx = spectrumCanvas.getContext('2d');
         const wheelCursor = document.getElementById('wheelCursor');
@@ -1144,7 +1127,6 @@
             }
         });
 
-        // اصلاح بخش ایمپورت فونت
         document.getElementById('fontFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -1155,7 +1137,6 @@
                     font.load().then(function(loadedFont) {
                         document.fonts.add(loadedFont);
                         
-                        // ایجاد کارت برای فونت وارد شده و افزودن به لیست
                         const container = document.getElementById('fontCardsContainer');
                         const newCard = document.createElement('div');
                         newCard.className = 'font-card';
@@ -1220,11 +1201,9 @@
             const newColor = bgColors[bgIndex];
             document.querySelector('.phone-container').style.backgroundColor = newColor;
             
-            // بروزرسانی Meta Tag
             const metaTheme = document.getElementById('themeColorMeta');
             if (metaTheme) metaTheme.setAttribute('content', newColor);
 
-            // ارسال رنگ جدید به اندروید (اسکچوار)
             if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
                 Android.updateStatusBarColor(newColor);
             }
@@ -1239,24 +1218,69 @@
             render();
         }
 
-        async function copyCanvasImage() {
+        // ۱. تابع کپی خود متن در کلیپ‌بورد
+        async function copyTextToClipboard() {
+            if (!currentText || currentText.trim() === "") {
+                showToast("متنی برای کپی وجود ندارد");
+                return;
+            }
             try {
-                if (navigator.clipboard && window.isSecureContext) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
                     await navigator.clipboard.writeText(currentText);
+                    showToast("متن کپی شد!");
+                } else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = currentText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textArea);
+                    showToast("متن کپی شد!");
                 }
-            } catch (e) {}
+            } catch (err) {
+                showToast("خطا در کپی متن");
+            }
+        }
 
-            canvas.toBlob(function(blob) {
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                    if (typeof Android !== 'undefined' && Android.copyImage) {
+        // ۲. تابع کپی تصویر بوم به صورت PNG در کلیپ‌بورد
+        function copyCanvasImage() {
+            canvas.toBlob(async function(blob) {
+                if (!blob) {
+                    showToast("خطا در ساخت تصویر");
+                    return;
+                }
+                
+                // ارسال به رابط اندروید در صورت وجود
+                if (typeof Android !== 'undefined' && Android.copyImage) {
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
                         Android.copyImage(reader.result);
-                    } else {
-                        showToast("تصویر کپی شد!");
-                    }
-                };
-                reader.readAsDataURL(blob);
+                    };
+                    reader.readAsDataURL(blob);
+                    return;
+                }
+
+                // کپی استاندارد مرورگر
+                try {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    await navigator.clipboard.write([item]);
+                    showToast("تصویر PNG کپی شد!");
+                } catch (e) {
+                    showToast("مرورگر از کپی مستقیم تصویر پشتیبانی نمی‌کند");
+                }
             }, "image/png");
+        }
+
+        // ۳. تابع ذخیره تصویر در گالری / دانلود
+        function saveImageToGallery() {
+            const dataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'story-font-' + Date.now() + '.png';
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("تصویر در گالری ذخیره شد!");
         }
 
         function copySuccess(){
@@ -1283,3 +1307,10 @@
     </script>
 </body>
 </html>
+
+        <!-- مدال ویرایش متن -->
+        <div class="text-modal" id="textModal">
+            <button class="text-modal-close" onclick="closeTextModal()">تایید</button>
+            <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
+        </div>
+    </div>
