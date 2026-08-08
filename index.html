@@ -575,14 +575,6 @@
                 <button class="tag-btn">All <i class="fa-solid fa-angle-down" style="font-size: 0.6rem;"></i></button>  
             </div>  
 
-            <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">  
-                <!-- کارت ایمپورت -->  
-                <div class="card-import" onclick="document.getElementById('fontFileInput').click()">  
-                    <i class="fa-solid fa-plus"></i>  
-                    <span>دانلود<br>ایمپورت</span>  
-                    <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">  
-                </div>  
-
                 <!-- کارت‌های فونت جدید -->  
                 <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">  
                     <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>  
@@ -1136,23 +1128,6 @@
         }  
     });  
 
-    document.getElementById('fontFileInput').addEventListener('change', function(e) {  
-        const file = e.target.files[0];  
-        if (file) {  
-            const fontName = 'CustomFont_' + Date.now();  
-            const reader = new FileReader();  
-            reader.onload = function(evt) {  
-                const font = new FontFace(fontName, evt.target.result);  
-                font.load().then(function(loadedFont) {  
-                    document.fonts.add(loadedFont);  
-                    currentFont = fontName;  
-                    showToast('فونت بارگذاری شد');  
-                    render();  
-                });  
-            };  
-            reader.readAsArrayBuffer(file);  
-        }  
-    });  
 
     function switchMainTab(tabName, btn) {  
         document.querySelectorAll('.main-tab-item').forEach(b => b.classList.remove('active'));  
