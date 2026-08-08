@@ -27,10 +27,7 @@
         font-family: 'Studio';  
         src: url('https://raw.githubusercontent.com/appfive/videos/main/Studio.ttf') format('truetype');  
     }  
-    @font-face {  
-        font-family: 'Potk';  
-        src: url('https://raw.githubusercontent.com/appfive/videos/main/PotkFont.ttf') format('truetype');  
-    }  
+
     @font-face {  
         font-family: 'Sogand';  
         src: url('https://raw.githubusercontent.com/appfive/videos/main/SOGAND.ttf') format('truetype');  
@@ -582,19 +579,10 @@
             <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">  
                 <!-- کارت ایمپورت -->  
                 <div class="card-import" onclick="document.getElementById('fontFileInput').click()">  
-                    <i class="fa-solid fa-plus"></i>  
-                    <span>دانلود<br>ایمپورت</span>  
-                    <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">  
-                </div>  
 
                 <!-- کارت‌های فونت جدید -->  
                 <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">  
                     <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>  
-                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>  
-                </div>  
-
-                <div class="font-card" data-font="Potk" onclick="selectFont('Potk', this)">  
-                    <span class="font-card-title" style="font-family: 'Potk';">پتک</span>  
                     <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>  
                 </div>  
 
