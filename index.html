@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" id="themeColorMeta" content="#1976d2">
     <title>استوریو‌فونت 🖍️ - Story Font Studio</title>
     
     <!-- فونت‌های گوگل و cdnjs -->
@@ -25,30 +24,6 @@
         @font-face {
             font-family: 'Sahel';
             src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/Sahel.woff2') format('woff2');
-        }
-        @font-face {
-            font-family: 'Studio';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Studio.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Potk';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/PotkFont.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Sogand';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/SOGAND.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Shekari';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Shekari.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'YekanPlus';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/YEKAN%20PLUS.TTF') format('truetype');
-        }
-        @font-face {
-            font-family: 'Yalda';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');
         }
 
         :root {
@@ -554,7 +529,7 @@
 
         <!-- بنر هشدار -->
         <div class="alert-banner">
-            شما از یک پس زمینه مشنگی استفاده کرده اید، برای کپی ارتقاء دهید
+            شما از یک پس زمینه مشنگی خر استفاده کرده اید، برای کپی ارتقاء دهید
         </div>
 
         <!-- 2. بوم اصلی Workspace -->
@@ -591,38 +566,7 @@
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     </div>
 
-                    <!-- کارت‌های فونت جدید -->
-                    <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">
-                        <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Potk" onclick="selectFont('Potk', this)">
-                        <span class="font-card-title" style="font-family: 'Potk';">پتک</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Sogand" onclick="selectFont('Sogand', this)">
-                        <span class="font-card-title" style="font-family: 'Sogand';">سوگند</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Shekari" onclick="selectFont('Shekari', this)">
-                        <span class="font-card-title" style="font-family: 'Shekari';">شکاری</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="YekanPlus" onclick="selectFont('YekanPlus', this)">
-                        <span class="font-card-title" style="font-family: 'YekanPlus';">یکان پلاس</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Yalda" onclick="selectFont('Yalda', this)">
-                        <span class="font-card-title" style="font-family: 'Yalda';">یلدا</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <!-- کارت‌های فونت قبلی -->
+                    <!-- کارت‌های فونت -->
                     <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">
                         <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
@@ -1197,17 +1141,7 @@
 
         function changeBgColor() {
             bgIndex = (bgIndex + 1) % bgColors.length;
-            const newColor = bgColors[bgIndex];
-            document.querySelector('.phone-container').style.backgroundColor = newColor;
-            
-            // بروزرسانی Meta Tag
-            const metaTheme = document.getElementById('themeColorMeta');
-            if (metaTheme) metaTheme.setAttribute('content', newColor);
-
-            // ارسال رنگ جدید به اندروید (اسکچوار)
-            if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
-                Android.updateStatusBarColor(newColor);
-            }
+            document.querySelector('.phone-container').style.backgroundColor = bgColors[bgIndex];
         }
 
         function toggleAlign() {
