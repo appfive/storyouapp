@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" id="themeColorMeta" content="#1976d2">
     <title>استوریو‌فونت 🖍️ - Story Font Studio</title>
     
     <!-- فونت‌های گوگل و cdnjs -->
@@ -1196,7 +1197,17 @@
 
         function changeBgColor() {
             bgIndex = (bgIndex + 1) % bgColors.length;
-            document.querySelector('.phone-container').style.backgroundColor = bgColors[bgIndex];
+            const newColor = bgColors[bgIndex];
+            document.querySelector('.phone-container').style.backgroundColor = newColor;
+            
+            // بروزرسانی Meta Tag
+            const metaTheme = document.getElementById('themeColorMeta');
+            if (metaTheme) metaTheme.setAttribute('content', newColor);
+
+            // ارسال رنگ جدید به اندروید (اسکچوار)
+            if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
+                Android.updateStatusBarColor(newColor);
+            }
         }
 
         function toggleAlign() {
