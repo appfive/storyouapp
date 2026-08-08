@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" id="themeColorMeta" content="#1976d2">
     <title>استوریو‌فونت 🖍️ - Story Font Studio</title>
     
     <!-- فونت‌های گوگل و cdnjs -->
@@ -25,27 +24,6 @@
         @font-face {
             font-family: 'Sahel';
             src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/Sahel.woff2') format('woff2');
-        }
-        @font-face {
-            font-family: 'Studio';
-            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Studio.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'Sogand';
-            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/SOGAND.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Shekari';
-            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Shekari.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'YekanPlus';
-            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/YEKAN%20PLUS.TTF') format('truetype');
-        }
-        @font-face {
-            font-family: 'Yalda';
-            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');
         }
 
         :root {
@@ -131,18 +109,12 @@
             background: rgba(255, 255, 255, 0.35);
         }
 
-        .btn-action-group {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
         .btn-copy-main {
             background: #ffffff;
             color: #000000;
             font-weight: 800;
-            font-size: 0.78rem;
-            padding: 8px 12px;
+            font-size: 0.88rem;
+            padding: 8px 18px;
             border-radius: 12px;
             border: none;
             cursor: pointer;
@@ -201,7 +173,7 @@
             font-size: 0.85rem;
         }
 
-        /* اسلایدر عمودی اندازه سمت راست */
+        /* اسلایدر عمودی اندازه سمت راست - جابجاشده به راست‌تر */
         .vertical-slider-wrap {
             position: absolute;
             right: 2px;
@@ -223,7 +195,6 @@
             background: rgba(255, 255, 255, 0.4);
             outline: none;
             transform: rotate(-90deg);
-            touch-action: none;
         }
 
         .vertical-slider::-webkit-slider-thumb {
@@ -246,6 +217,7 @@
             z-index: 10;
         }
 
+        /* فیلترها - فقط All باقی مانده است */
         .filter-tags {
             display: flex;
             gap: 8px;
@@ -263,6 +235,7 @@
             cursor: pointer;
         }
 
+        /* کارت‌های افقی فونت */
         .font-cards-scroll {
             display: flex;
             gap: 10px;
@@ -332,6 +305,7 @@
             transform: scale(1.15);
         }
 
+        /* تب‌های اصلی سفلی */
         .main-tabs {
             display: flex;
             justify-content: space-around;
@@ -365,6 +339,7 @@
             border-radius: 2px;
         }
 
+        /* پنل‌های تنظیمات زیرین */
         .sub-panel {
             display: none;
             padding: 8px 16px;
@@ -392,6 +367,7 @@
             outline: none;
         }
 
+        /* دکمه بازکننده طیف رنگ دایره‌ای */
         .color-preview-btn {
             width: 28px;
             height: 28px;
@@ -402,6 +378,7 @@
             display: inline-block;
         }
 
+        /* مدال طیف رنگ دایره‌ای */
         .color-picker-modal {
             position: absolute;
             inset: 0;
@@ -474,6 +451,7 @@
         .picker-btn-confirm { background: #ffffff; color: #000; }
         .picker-btn-cancel { background: rgba(255,255,255,0.2); color: #fff; }
 
+        /* مدال ویرایش متن */
         .text-modal {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -497,8 +475,6 @@
             outline: none;
             text-align: center;
             margin-top: 40px;
-            user-select: text;
-            -webkit-user-select: text;
         }
 
         .text-modal-close {
@@ -512,6 +488,7 @@
             cursor: pointer;
         }
 
+        /* توست پیام */
         .toast {
             position: absolute;
             top: 60px;
@@ -536,25 +513,23 @@
 
     <div class="phone-container">
         <!-- پیام توست -->
-        <div class="toast" id="toast">پیام سیستم</div>
+        <div class="toast" id="toast">متن در کلیپ بورد کپی شد</div>
 
-        <!-- 1. نوار بالایی -->
+        <!-- 1. نوار بالایی بدون تنظیمات -->
         <div class="top-bar">
             <div class="top-icons-right">
                 <button class="icon-btn" onclick="showToast('راهنما')"><i class="fa-solid fa-circle-question"></i></button>
             </div>
-            <div class="btn-action-group">
+            <div style="display: flex; gap: 8px; align-items: center;">
                 <button class="icon-btn" onclick="showToast('تاریخچه')"><i class="fa-solid fa-clock-rotate-left"></i></button>
                 <button class="icon-btn" onclick="changeBgColor()"><i class="fa-solid fa-circle-half-stroke"></i></button>
-                <button class="btn-copy-main" onclick="copyTextToClipboard()">کپی متن</button>
-                <button class="btn-copy-main" onclick="copyCanvasImage()">کپی تصویر</button>
-                <button class="btn-copy-main" onclick="saveImageToGallery()"><i class="fa-solid fa-download"></i></button>
+                <button class="btn-copy-main" onclick="copyCanvasImage()">کپی فونت</button>
             </div>
         </div>
 
         <!-- بنر هشدار -->
         <div class="alert-banner">
-            نسخه رایگان فونت استوری استوریو برای شما فعال میباشد. 
+            شما از یک پس زمینه قفل استفاده کرده اید، برای کپی ارتقاء دهید
         </div>
 
         <!-- 2. بوم اصلی Workspace -->
@@ -568,7 +543,7 @@
                 <button class="action-circle-btn" onclick="openTextModal()"><i class="fa-solid fa-pen"></i></button>
             </div>
 
-            <!-- اسلایدر اندازه سمت راست -->
+            <!-- اسلایدر اندازه سمت راست (دامنه بیشتر و جابجا شده به راست) -->
             <div class="vertical-slider-wrap">
                 <input type="range" class="vertical-slider" id="sliderSize" min="5" max="180" value="55">
             </div>
@@ -584,39 +559,14 @@
                 </div>
 
                 <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">
-                    <!-- دکمه ایمپورت فونت -->
-                    <label class="card-import">
-                        <i class="fa-solid fa-plus" style="font-size: 1.2rem;"></i>
-                        <span>افزودن</span>
+                    <!-- کارت ایمپورت -->
+                    <div class="card-import" onclick="document.getElementById('fontFileInput').click()">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>دانلود<br>ایمپورت</span>
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
-                    </label>
+                    </div>
 
                     <!-- کارت‌های فونت -->
-                    <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">
-                        <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Sogand" onclick="selectFont('Sogand', this)">
-                        <span class="font-card-title" style="font-family: 'Sogand';">سوگند</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Shekari" onclick="selectFont('Shekari', this)">
-                        <span class="font-card-title" style="font-family: 'Shekari';">شکاری</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="YekanPlus" onclick="selectFont('YekanPlus', this)">
-                        <span class="font-card-title" style="font-family: 'YekanPlus';">یکان پلاس</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
-                    <div class="font-card" data-font="Yalda" onclick="selectFont('Yalda', this)">
-                        <span class="font-card-title" style="font-family: 'Yalda';">یلدا</span>
-                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
-                    </div>
-
                     <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">
                         <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
@@ -697,7 +647,7 @@
                 </div>
             </div>
 
-            <!-- تب ۳: رنگ و سایه -->
+            <!-- تب ۳: رنگ و سایه (همراه پالت طیف دایره‌ای) -->
             <div class="sub-panel" id="tabContentColor">
                 <div class="control-row">
                     <span>رنگ متن:</span>
@@ -717,7 +667,7 @@
                 </div>
             </div>
 
-            <!-- تب ۴: برچسب آماده -->
+            <!-- تب ۴: برچسب آماده (جایگزین زیباسازی) -->
             <div class="sub-panel" id="tabContentBeauty">
                 <div class="control-row">
                     <label>برچسب آماده:</label>
@@ -753,7 +703,7 @@
             </div>
         </div>
 
-        <!-- مدال طیف انتخاب رنگ -->
+        <!-- مدال طیف انتخاب رنگ دایره‌ای -->
         <div class="color-picker-modal" id="colorPickerModal">
             <canvas class="spectrum-wheel" id="spectrumCanvas" width="220" height="220"></canvas>
             <div class="wheel-cursor" id="wheelCursor"></div>
@@ -774,6 +724,13 @@
                 <button class="picker-btn picker-btn-confirm" onclick="confirmSpectrumColor()">تایید</button>
             </div>
         </div>
+
+        <!-- مدال ویرایش متن -->
+        <div class="text-modal" id="textModal">
+            <button class="text-modal-close" onclick="closeTextModal()">تایید</button>
+            <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
+        </div>
+    </div>
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -786,6 +743,7 @@
         let bgColors = ['#1976d2', '#8e24aa', '#e91e63', '#009688', '#ff5722', '#181818'];
         let bgIndex = 0;
 
+        // ذخیره رنگ‌ها
         let colors = {
             text: '#ffffff',
             badge: '#000000',
@@ -854,6 +812,7 @@
                 ctx.translate(-canvas.width / 2, -canvas.height / 2);
             }
 
+            // ۱. فریم و کادر
             if (frameStyle !== 'none') {
                 ctx.save();
                 ctx.strokeStyle = colors.text;
@@ -886,6 +845,7 @@
 
             const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);
 
+            // ۲. رسم برچسب
             if (badgeStyle !== 'none') {
                 lines.forEach((line, i) => {
                     const metrics = ctx.measureText(line || " ");
@@ -932,6 +892,7 @@
                 });
             }
 
+            // ۳. متن و سایه
             ctx.shadowColor = colors.shadow;
             ctx.shadowBlur = shadowBlur;
             ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;
@@ -950,10 +911,11 @@
         function selectFont(fontName, element) {
             currentFont = fontName;
             document.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
-            if (element) element.classList.add('active');
+            element.classList.add('active');
             document.fonts.load(`16px "${fontName}"`).then(() => render());
         }
 
+        /* عملکرد واقعی دکمه قلب (انتقال فونت لایک‌شده به ابتدای لیست) */
         function toggleFavorite(event, heartIcon) {
             event.stopPropagation();
             const card = heartIcon.closest('.font-card');
@@ -962,6 +924,7 @@
             heartIcon.classList.toggle('active');
             
             if (heartIcon.classList.contains('active')) {
+                // انتقال به ابتدای لیست (بعد از دکمه ایمپورت)
                 const importCard = container.querySelector('.card-import');
                 container.insertBefore(card, importCard.nextSibling);
                 showToast('به علاقه‌مندی‌ها اضافه شد');
@@ -970,6 +933,7 @@
             }
         }
 
+        /* اعمال استایل برچسب‌های آماده */
         function applyBadgePreset(presetKey) {
             if (presetKey === 'custom') return;
 
@@ -1014,6 +978,7 @@
             render();
         }
 
+        /* --- پیاده‌سازی پالت انتخاب رنگ طیف دایره‌ای --- */
         const spectrumCanvas = document.getElementById('spectrumCanvas');
         const sCtx = spectrumCanvas.getContext('2d');
         const wheelCursor = document.getElementById('wheelCursor');
@@ -1136,32 +1101,9 @@
                     const font = new FontFace(fontName, evt.target.result);
                     font.load().then(function(loadedFont) {
                         document.fonts.add(loadedFont);
-                        
-                        const container = document.getElementById('fontCardsContainer');
-                        const newCard = document.createElement('div');
-                        newCard.className = 'font-card';
-                        newCard.setAttribute('data-font', fontName);
-                        newCard.onclick = function() { selectFont(fontName, this); };
-                        
-                        const titleSpan = document.createElement('span');
-                        titleSpan.className = 'font-card-title';
-                        titleSpan.style.fontFamily = `"${fontName}"`;
-                        titleSpan.textContent = 'سفارشی';
-                        
-                        const heartI = document.createElement('i');
-                        heartI.className = 'fa-solid fa-heart font-card-heart';
-                        heartI.onclick = function(ev) { toggleFavorite(ev, this); };
-                        
-                        newCard.appendChild(titleSpan);
-                        newCard.appendChild(heartI);
-                        
-                        const importCard = container.querySelector('.card-import');
-                        container.insertBefore(newCard, importCard.nextSibling);
-
-                        selectFont(fontName, newCard);
+                        currentFont = fontName;
                         showToast('فونت بارگذاری شد');
-                    }).catch(function(err) {
-                        showToast('خطا در بارگذاری فونت');
+                        render();
                     });
                 };
                 reader.readAsArrayBuffer(file);
@@ -1198,15 +1140,7 @@
 
         function changeBgColor() {
             bgIndex = (bgIndex + 1) % bgColors.length;
-            const newColor = bgColors[bgIndex];
-            document.querySelector('.phone-container').style.backgroundColor = newColor;
-            
-            const metaTheme = document.getElementById('themeColorMeta');
-            if (metaTheme) metaTheme.setAttribute('content', newColor);
-
-            if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
-                Android.updateStatusBarColor(newColor);
-            }
+            document.querySelector('.phone-container').style.backgroundColor = bgColors[bgIndex];
         }
 
         function toggleAlign() {
@@ -1218,69 +1152,33 @@
             render();
         }
 
-        // ۱. تابع کپی خود متن در کلیپ‌بورد
-        async function copyTextToClipboard() {
-            if (!currentText || currentText.trim() === "") {
-                showToast("متنی برای کپی وجود ندارد");
-                return;
-            }
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(currentText);
-                    showToast("متن کپی شد!");
-                } else {
-                    const textArea = document.createElement("textarea");
-                    textArea.value = currentText;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textArea);
-                    showToast("متن کپی شد!");
-                }
-            } catch (err) {
-                showToast("خطا در کپی متن");
-            }
-        }
-
-        // ۲. تابع کپی تصویر بوم به صورت PNG در کلیپ‌بورد
+        /* عملکرد کپی خروجی بوم به صورت تصویر در کلیپ‌بورد */
         function copyCanvasImage() {
             canvas.toBlob(async function(blob) {
                 if (!blob) {
-                    showToast("خطا در ساخت تصویر");
+                    showToast("خطا در ایجاد تصویر!");
                     return;
                 }
-                
-                // ارسال به رابط اندروید در صورت وجود
-                if (typeof Android !== 'undefined' && Android.copyImage) {
-                    var reader = new FileReader();
-                    reader.onloadend = function() {
-                        Android.copyImage(reader.result);
-                    };
-                    reader.readAsDataURL(blob);
-                    return;
-                }
-
-                // کپی استاندارد مرورگر
                 try {
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                    showToast("تصویر PNG کپی شد!");
-                } catch (e) {
-                    showToast("مرورگر از کپی مستقیم تصویر پشتیبانی نمی‌کند");
+                    if (navigator.clipboard && window.ClipboardItem) {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        await navigator.clipboard.write([item]);
+                        showToast("تصویر کپی شد!");
+                    } else {
+                        var reader = new FileReader();
+                        reader.onloadend = function() {
+                            if (typeof Android !== 'undefined' && Android.copyImage) {
+                                Android.copyImage(reader.result);
+                            } else {
+                                showToast("تصویر کپی شد!");
+                            }
+                        };
+                        reader.readAsDataURL(blob);
+                    }
+                } catch (err) {
+                    showToast("امکان کپی خودکار وجود ندارد");
                 }
             }, "image/png");
-        }
-
-        // ۳. تابع ذخیره تصویر در گالری / دانلود
-        function saveImageToGallery() {
-            const dataUrl = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = 'story-font-' + Date.now() + '.png';
-            link.href = dataUrl;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast("تصویر در گالری ذخیره شد!");
         }
 
         function copySuccess(){
@@ -1295,8 +1193,6 @@
         }
 
         sliderSize.addEventListener('input', render);
-        sliderSize.addEventListener('change', render);
-        
         mainTextInput.addEventListener('input', () => {
             currentText = mainTextInput.value;
             render();
@@ -1307,10 +1203,3 @@
     </script>
 </body>
 </html>
-
-        <!-- مدال ویرایش متن -->
-        <div class="text-modal" id="textModal">
-            <button class="text-modal-close" onclick="closeTextModal()">تایید</button>
-            <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
-        </div>
-    </div>
