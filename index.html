@@ -28,27 +28,27 @@
         }
         @font-face {
             font-family: 'Studio';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Studio.ttf') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Studio.ttf') format('truetype');
         }
         @font-face {
             font-family: 'Potk';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/PotkFont.ttf') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/PotkFont.ttf') format('truetype');
         }
         @font-face {
             font-family: 'Sogand';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/SOGAND.ttf') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/SOGAND.ttf') format('truetype');
         }
         @font-face {
             font-family: 'Shekari';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Shekari.ttf') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Shekari.ttf') format('truetype');
         }
         @font-face {
             font-family: 'YekanPlus';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/YEKAN%20PLUS.TTF') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/YEKAN%20PLUS.TTF') format('truetype');
         }
         @font-face {
             font-family: 'Yalda';
-            src: url('https://raw.githubusercontent.com/appfive/videos/main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');
         }
 
         :root {
@@ -968,7 +968,7 @@
         function selectFont(fontName, element) {
             currentFont = fontName;
             document.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
+            if (element) element.classList.add('active');
             document.fonts.load(`16px "${fontName}"`).then(() => render());
         }
 
@@ -1149,6 +1149,7 @@
             }
         });
 
+        // اصلاح بخش ایمپورت فونت
         document.getElementById('fontFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -1158,9 +1159,33 @@
                     const font = new FontFace(fontName, evt.target.result);
                     font.load().then(function(loadedFont) {
                         document.fonts.add(loadedFont);
-                        currentFont = fontName;
+                        
+                        // ایجاد کارت برای فونت وارد شده و افزودن به لیست
+                        const container = document.getElementById('fontCardsContainer');
+                        const newCard = document.createElement('div');
+                        newCard.className = 'font-card';
+                        newCard.setAttribute('data-font', fontName);
+                        newCard.onclick = function() { selectFont(fontName, this); };
+                        
+                        const titleSpan = document.createElement('span');
+                        titleSpan.className = 'font-card-title';
+                        titleSpan.style.fontFamily = `"${fontName}"`;
+                        titleSpan.textContent = 'سفارشی';
+                        
+                        const heartI = document.createElement('i');
+                        heartI.className = 'fa-solid fa-heart font-card-heart';
+                        heartI.onclick = function(ev) { toggleFavorite(ev, this); };
+                        
+                        newCard.appendChild(titleSpan);
+                        newCard.appendChild(heartI);
+                        
+                        const importCard = container.querySelector('.card-import');
+                        container.insertBefore(newCard, importCard.nextSibling);
+
+                        selectFont(fontName, newCard);
                         showToast('فونت بارگذاری شد');
-                        render();
+                    }).catch(function(err) {
+                        showToast('خطا در بارگذاری فونت');
                     });
                 };
                 reader.readAsArrayBuffer(file);
