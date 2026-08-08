@@ -30,7 +30,10 @@
             font-family: 'Studio';
             src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/Studio.ttf') format('truetype');
         }
-
+        @font-face {
+            font-family: 'Potk';
+            src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/PotkFont.ttf') format('truetype');
+        }
         @font-face {
             font-family: 'Sogand';
             src: url('https://cdn.jsdelivr.net/gh/appfive/videos@main/SOGAND.ttf') format('truetype');
@@ -195,7 +198,7 @@
             font-size: 0.85rem;
         }
 
-        /* اسلایدر عمودی اندازه سمت راست - جابجاشده به راست‌تر */
+        /* اسلایدر عمودی اندازه سمت راست */
         .vertical-slider-wrap {
             position: absolute;
             right: 2px;
@@ -211,21 +214,34 @@
 
         .vertical-slider {
             -webkit-appearance: none;
+            appearance: none;
             width: 180px;
-            height: 4px;
-            border-radius: 2px;
+            height: 6px;
+            border-radius: 3px;
             background: rgba(255, 255, 255, 0.4);
             outline: none;
             transform: rotate(-90deg);
+            cursor: pointer;
         }
 
         .vertical-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
+            appearance: none;
             width: 22px;
             height: 22px;
             border-radius: 50%;
             background: #ffffff;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .vertical-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            border: none;
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
@@ -551,7 +567,7 @@
 
         <!-- بنر هشدار -->
         <div class="alert-banner">
-            نسخه رایگان فونت استوری استوریو برای شما فعال میباشد. 
+            شما از یک پس زمینه قفل استفاده کرده اید، برای کپی ارتقاء دهید
         </div>
 
         <!-- 2. بوم اصلی Workspace -->
@@ -565,9 +581,9 @@
                 <button class="action-circle-btn" onclick="openTextModal()"><i class="fa-solid fa-pen"></i></button>
             </div>
 
-            <!-- اسلایدر اندازه سمت راست (دامنه بیشتر و جابجا شده به راست) -->
+            <!-- اسلایدر اندازه سمت راست (اصلاح شده) -->
             <div class="vertical-slider-wrap">
-                <input type="range" class="vertical-slider" id="sliderSize" min="5" max="180" value="55">
+                <input type="range" class="vertical-slider" id="sliderSize" min="10" max="150" value="55" step="1">
             </div>
         </div>
 
@@ -580,11 +596,22 @@
                     <button class="tag-btn">All <i class="fa-solid fa-angle-down" style="font-size: 0.6rem;"></i></button>
                 </div>
 
-                <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;"
+                <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">
+                    <!-- کارت ایمپورت -->
+                    <div class="card-import" onclick="document.getElementById('fontFileInput').click()">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>دانلود<br>ایمپورت</span>
+                        <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
+                    </div>
 
                     <!-- کارت‌های فونت جدید -->
                     <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">
                         <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="Potk" onclick="selectFont('Potk', this)">
+                        <span class="font-card-title" style="font-family: 'Potk';">پتک</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                     </div>
 
@@ -655,8 +682,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- تب ۲: استایل -->
+                        <!-- تب ۲: استایل -->
             <div class="sub-panel" id="tabContentStyle">
                 <div class="control-row">
                     <label>طرح برچسب:</label>
@@ -837,7 +863,10 @@
         function render() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const fontSize = parseInt(sliderSize.value) * 2;
+            // اصلاح محاسبه اندازه فونت بر اساس مقدار اسلایدر عمودی
+            const baseVal = parseFloat(sliderSize.value) || 55;
+            const fontSize = baseVal * 1.8;
+
             const badgeStyle = document.getElementById('badgeStyleSelect').value;
             const badgePattern = document.getElementById('badgePatternSelect').value;
             const frameStyle = document.getElementById('frameStyleSelect') ? document.getElementById('frameStyleSelect').value : 'none';
@@ -967,7 +996,6 @@
             heartIcon.classList.toggle('active');
             
             if (heartIcon.classList.contains('active')) {
-                // انتقال به ابتدای لیست (بعد از دکمه ایمپورت)
                 const importCard = container.querySelector('.card-import');
                 container.insertBefore(card, importCard.nextSibling);
                 showToast('به علاقه‌مندی‌ها اضافه شد');
@@ -1135,7 +1163,6 @@
             }
         });
 
-        // اصلاح بخش ایمپورت فونت
         document.getElementById('fontFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -1146,7 +1173,6 @@
                     font.load().then(function(loadedFont) {
                         document.fonts.add(loadedFont);
                         
-                        // ایجاد کارت برای فونت وارد شده و افزودن به لیست
                         const container = document.getElementById('fontCardsContainer');
                         const newCard = document.createElement('div');
                         newCard.className = 'font-card';
@@ -1211,11 +1237,9 @@
             const newColor = bgColors[bgIndex];
             document.querySelector('.phone-container').style.backgroundColor = newColor;
             
-            // بروزرسانی Meta Tag
             const metaTheme = document.getElementById('themeColorMeta');
             if (metaTheme) metaTheme.setAttribute('content', newColor);
 
-            // ارسال رنگ جدید به اندروید (اسکچوار)
             if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
                 Android.updateStatusBarColor(newColor);
             }
@@ -1255,7 +1279,10 @@
             setTimeout(() => toast.classList.remove('show'), 2000);
         }
 
+        // اتصال رویدادهای اسلایدر عمودی سایز به صورت آنلاین و برحسب تغییر لحظه‌ای
         sliderSize.addEventListener('input', render);
+        sliderSize.addEventListener('change', render);
+
         mainTextInput.addEventListener('input', () => {
             currentText = mainTextInput.value;
             render();
@@ -1266,3 +1293,5 @@
     </script>
 </body>
 </html>
+
+    
