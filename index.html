@@ -529,7 +529,7 @@
 
         <!-- بنر هشدار -->
         <div class="alert-banner">
-            شما از یک پس زمینه مشنگی خر استفاده کرده اید، برای کپی ارتقاء دهید
+            شما از یک پس زمینه مشنگ🤢❣️🤢🤢❣️🤢⏳⏳ی خر استفاده کرده اید، برای کپی ارتقاء دهید
         </div>
 
         <!-- 2. بوم اصلی Workspace -->
@@ -1153,23 +1153,24 @@
             render();
         }
 
-        function copyCanvasImage() {
-            canvas.toBlob(function(blob) {
-                var reader = new FileReader();
-                reader.onloadend = function() {
-                    if (typeof Android !== 'undefined' && Android.copyImage) {
-                        Android.copyImage(reader.result);
-                    } else {
-                        showToast("تصویر کپی شد!");
-                    }
-                };
-                reader.readAsDataURL(blob);
-            }, "image/png");
-        }
+   function copyCanvasImage() {
+    try {
+        // دریافت مستقیم عکس به صورت Base64
+        var base64Image = canvas.toDataURL("image/png");
 
-        function copySuccess(){
-            showToast("تصویر کپی شد!");
+        // بررسی و فراخوانی ارتباط با اسکچوار
+        if (typeof Android !== 'undefined' && Android.copyImage) {
+            Android.copyImage(base64Image);
+        } else if (window.Android && window.Android.copyImage) {
+            window.Android.copyImage(base64Image);
+        } else {
+            showToast("ارتباط با اپلیکیشن برقرار نشد!");
         }
+    } catch (e) {
+        alert("خطای بوم: " + e.message);
+    }
+   }
+        
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
