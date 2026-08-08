@@ -25,6 +25,30 @@
             font-family: 'Sahel';
             src: url('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/Sahel.woff2') format('woff2');
         }
+        @font-face {
+            font-family: 'Studio';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/Studio.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Potk';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/PotkFont.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Sogand';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/SOGAND.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Shekari';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/Shekari.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'YekanPlus';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/YEKAN%20PLUS.TTF') format('truetype');
+        }
+        @font-face {
+            font-family: 'Yalda';
+            src: url('https://raw.githubusercontent.com/appfive/videos/main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');
+        }
 
         :root {
             --primary-blue: #1976d2;
@@ -566,7 +590,38 @@
                         <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">
                     </div>
 
-                    <!-- کارت‌های فونت -->
+                    <!-- کارت‌های فونت جدید -->
+                    <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">
+                        <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="Potk" onclick="selectFont('Potk', this)">
+                        <span class="font-card-title" style="font-family: 'Potk';">پتک</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="Sogand" onclick="selectFont('Sogand', this)">
+                        <span class="font-card-title" style="font-family: 'Sogand';">سوگند</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="Shekari" onclick="selectFont('Shekari', this)">
+                        <span class="font-card-title" style="font-family: 'Shekari';">شکاری</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="YekanPlus" onclick="selectFont('YekanPlus', this)">
+                        <span class="font-card-title" style="font-family: 'YekanPlus';">یکان پلاس</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <div class="font-card" data-font="Yalda" onclick="selectFont('Yalda', this)">
+                        <span class="font-card-title" style="font-family: 'Yalda';">یلدا</span>
+                        <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                    </div>
+
+                    <!-- کارت‌های فونت قبلی -->
                     <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">
                         <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>
                         <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
@@ -731,6 +786,7 @@
             <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>
         </div>
     </div>
+
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -1152,32 +1208,17 @@
             render();
         }
 
-        /* عملکرد کپی خروجی بوم به صورت تصویر در کلیپ‌بورد */
         function copyCanvasImage() {
-            canvas.toBlob(async function(blob) {
-                if (!blob) {
-                    showToast("خطا در ایجاد تصویر!");
-                    return;
-                }
-                try {
-                    if (navigator.clipboard && window.ClipboardItem) {
-                        const item = new ClipboardItem({ 'image/png': blob });
-                        await navigator.clipboard.write([item]);
-                        showToast("تصویر کپی شد!");
+            canvas.toBlob(function(blob) {
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    if (typeof Android !== 'undefined' && Android.copyImage) {
+                        Android.copyImage(reader.result);
                     } else {
-                        var reader = new FileReader();
-                        reader.onloadend = function() {
-                            if (typeof Android !== 'undefined' && Android.copyImage) {
-                                Android.copyImage(reader.result);
-                            } else {
-                                showToast("تصویر کپی شد!");
-                            }
-                        };
-                        reader.readAsDataURL(blob);
+                        showToast("تصویر کپی شد!");
                     }
-                } catch (err) {
-                    showToast("امکان کپی خودکار وجود ندارد");
-                }
+                };
+                reader.readAsDataURL(blob);
             }, "image/png");
         }
 
