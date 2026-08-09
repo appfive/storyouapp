@@ -546,7 +546,7 @@
 
     <!-- بنر هشدار -->  
     <div class="alert-banner">  
-        شما از یک پس زمینه مشنگی استفاده کرده اید، برای کپی ارتقاء دهید  
+        شما از یک پس زمینه gh استفاده کرده اید، برای کپی ارتقاء دهید  
     </div>  
 
     <!-- 2. بوم اصلی Workspace -->  
@@ -1192,9 +1192,9 @@
         if (metaTheme) metaTheme.setAttribute('content', newColor);  
 
         // ارسال رنگ جدید به اندروید (اسکچوار)  
-        if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {  
-            Android.updateStatusBarColor(newColor);  
-        }  
+        if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
+                Android.updateStatusBarColor(newColor);
+        }
     }  
 
     function toggleAlign() {  
