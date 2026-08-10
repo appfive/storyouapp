@@ -44,6 +44,76 @@
         src: url('https://raw.githubusercontent.com/appfive/videos/main/Yalda%7B%40FontsClub%7D.ttf') format('truetype');  
     }  
 
+    @font-face {
+        font-family: 'Snapp';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Snapp%21.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Morabba';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Morabba-UltraLight.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Hasti';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Hasti-HeavyRD.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Giti';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/ir%20Giti.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Javan';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/javan.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Dabir';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Dabir_%40plan_shop.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SardarHoor';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/A%20Sardar%20Hoor.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Dastan';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Far_Dastan.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'DigiDelbar';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Digi%20Delbar2%20Bold%20.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'FedraArabic';
+        src: url('https://raw.githubusercontent.com/appfive/videos/main/Fedra%20Arabic%20Display%20AR%20LT%20Black.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    
     :root {  
         --primary-blue: #1976d2;  
         --bg-canvas: #1976d2;  
@@ -609,6 +679,56 @@
                     <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>  
                 </div>  
 
+                <div class="font-card" data-font="Snapp" onclick="selectFont('Snapp', this)">
+                    <span class="font-card-title" style="font-family: 'Snapp';">اسنپ</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Morabba" onclick="selectFont('Morabba', this)">
+                    <span class="font-card-title" style="font-family: 'Morabba';">مربع</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Hasti" onclick="selectFont('Hasti', this)">
+                    <span class="font-card-title" style="font-family: 'Hasti';">هستی</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Giti" onclick="selectFont('Giti', this)">
+                    <span class="font-card-title" style="font-family: 'Giti';">گیتی</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Javan" onclick="selectFont('Javan', this)">
+                    <span class="font-card-title" style="font-family: 'Javan';">جوان</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Dabir" onclick="selectFont('Dabir', this)">
+                    <span class="font-card-title" style="font-family: 'Dabir';">دبیر</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="SardarHoor" onclick="selectFont('SardarHoor', this)">
+                    <span class="font-card-title" style="font-family: 'SardarHoor';">سردار حور</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="Dastan" onclick="selectFont('Dastan', this)">
+                    <span class="font-card-title" style="font-family: 'Dastan';">داستان</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="DigiDelbar" onclick="selectFont('DigiDelbar', this)">
+                    <span class="font-card-title" style="font-family: 'DigiDelbar';">دیجی دلبر</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+
+                <div class="font-card" data-font="FedraArabic" onclick="selectFont('FedraArabic', this)">
+                    <span class="font-card-title" style="font-family: 'FedraArabic';">فدرا</span>
+                    <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
+                </div>
+                
                 <!-- کارت‌های فونت قبلی -->  
                 <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">  
                     <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>  
