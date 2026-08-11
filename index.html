@@ -393,6 +393,44 @@
         transform: scale(1.15);  
     }  
 
+    /* اسکرول افقی کارت‌های برچسب آماده */
+    .preset-cards-scroll {
+        display: flex;
+        gap: 12px;
+        padding: 4px 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .preset-cards-scroll::-webkit-scrollbar { display: none; }
+
+    .preset-card {
+        min-width: 80px;
+        height: 80px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        backdrop-filter: blur(8px);
+        transition: all 0.2s ease;
+        padding: 6px;
+    }
+
+    .preset-card.active {
+        border: 2px solid #ffffff;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .preset-card-title {
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
     /* تب‌های اصلی سفلی */  
     .main-tabs {  
         display: flex;  
@@ -776,7 +814,6 @@
                 </div>  
             </div>  
         </div>  
-
         <!-- تب ۲: استایل -->  
         <div class="sub-panel" id="tabContentStyle">  
             <div class="control-row">  
@@ -830,31 +867,28 @@
             </div>  
         </div>  
 
-        <!-- تب ۴: برچسب آماده (جایگزین زیباسازی) -->  
+        <!-- تب ۴: برچسب آماده (به‌صورت کارت‌های کاروسلی کاملاً شفاف مشابه فونت) -->  
         <div class="sub-panel" id="tabContentBeauty">  
-            <div class="control-row">  
-                <label>برچسب آماده:</label>  
-                <select id="presetBadgeSelect" onchange="applyBadgePreset(this.value)">  
-                    <option value="custom" style="color:black">سفارشی</option>  
-                    <option value="neon_dark" style="color:black">نئون مشکی</option>  
-                    <option value="soft_white" style="color:black">سفید ملایم</option>  
-                    <option value="retro_stripes" style="color:black">رترو راه راه</option>  
-                    <option value="leaf_green" style="color:black">برگ مدرن</option>  
-                    <option value="cut_modern" style="color:black">کج استایلیش</option>  
-                </select>  
-
-                <label>فریم و کادر:</label>  
-                <select id="frameStyleSelect" onchange="render()">  
-                    <option value="none" style="color:black">بدون کادر</option>  
-                    <option value="simple" style="color:black">خط ساده</option>  
-                    <option value="double" style="color:black">کادر دو لایه</option>  
-                    <option value="dashed" style="color:black">چین‌دار / نقطه چین</option>  
-                </select>  
-            </div>  
-            <div class="control-row">  
-                <label>زاویه چرخش:</label>  
-                <input type="range" id="rotationAngle" min="-30" max="30" value="0" step="1" oninput="render()">  
-            </div>  
+            <div class="preset-cards-scroll">
+                <div class="preset-card active" onclick="selectPreset('custom', this)">
+                    <span class="preset-card-title">سفارشی</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('neon_dark', this)">
+                    <span class="preset-card-title" style="background: #111; color: #00ffff; padding: 3px 8px; border-radius: 6px;">نئون مشکی</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('soft_white', this)">
+                    <span class="preset-card-title" style="background: #ffffff; color: #000000; padding: 3px 8px; border-radius: 12px;">سفید ملایم</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('retro_stripes', this)">
+                    <span class="preset-card-title" style="background: #e65100; color: #ffffff; padding: 3px 8px;">رترو راه راه</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('leaf_green', this)">
+                    <span class="preset-card-title" style="background: #2e7d32; color: #ffffff; padding: 3px 8px; border-radius: 8px 0 8px 0;">برگ مدرن</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('cut_modern', this)">
+                    <span class="preset-card-title" style="background: #d81b60; color: #ffffff; padding: 3px 8px; transform: skew(-10deg);">کج استایلیش</span>
+                </div>
+            </div>
         </div>  
 
         <!-- نوار تب‌های اصلی پایین -->  
@@ -961,38 +995,12 @@
         const fontSize = parseInt(sliderSize.value) * 2;  
         const badgeStyle = document.getElementById('badgeStyleSelect').value;  
         const badgePattern = document.getElementById('badgePatternSelect').value;  
-        const frameStyle = document.getElementById('frameStyleSelect') ? document.getElementById('frameStyleSelect').value : 'none';  
-        const rotationDeg = document.getElementById('rotationAngle') ? parseInt(document.getElementById('rotationAngle').value) : 0;  
         const shadowBlur = parseInt(document.getElementById('shadowBlur').value);  
         const opacity = parseFloat(document.getElementById('badgeOpacity').value);  
         const paddingRatio = parseFloat(document.getElementById('badgePadding').value);  
         const lineHeightFactor = parseFloat(document.getElementById('lineHeightSlider').value);  
 
         ctx.save();  
-
-        if (rotationDeg !== 0) {  
-            ctx.translate(canvas.width / 2, canvas.height / 2);  
-            ctx.rotate((rotationDeg * Math.PI) / 180);  
-            ctx.translate(-canvas.width / 2, -canvas.height / 2);  
-        }  
-
-        // ۱. فریم و کادر  
-        if (frameStyle !== 'none') {  
-            ctx.save();  
-            ctx.strokeStyle = colors.text;  
-            ctx.lineWidth = 6;  
-            const margin = 30;  
-            if (frameStyle === 'simple') {  
-                ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);  
-            } else if (frameStyle === 'double') {  
-                ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);  
-                ctx.strokeRect(margin + 10, margin + 10, canvas.width - (margin + 10) * 2, canvas.height - (margin + 10) * 2);  
-            } else if (frameStyle === 'dashed') {  
-                ctx.setLineDash([16, 12]);  
-                ctx.strokeRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);  
-            }  
-            ctx.restore();  
-        }  
 
         ctx.font = `700 ${fontSize}px "${currentFont}", sans-serif`;  
         ctx.direction = 'rtl';  
@@ -1009,7 +1017,7 @@
 
         const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);  
 
-        // ۲. رسم برچسب  
+        // رسم برچسب  
         if (badgeStyle !== 'none') {  
             lines.forEach((line, i) => {  
                 const metrics = ctx.measureText(line || " ");  
@@ -1056,7 +1064,7 @@
             });  
         }  
 
-        // ۳. متن و سایه  
+        // متن و سایه  
         ctx.shadowColor = colors.shadow;  
         ctx.shadowBlur = shadowBlur;  
         ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;  
@@ -1079,7 +1087,6 @@
         document.fonts.load(`16px "${fontName}"`).then(() => render());  
     }  
 
-    /* عملکرد واقعی دکمه قلب (انتقال فونت لایک‌شده به ابتدای لیست) */  
     function toggleFavorite(event, heartIcon) {  
         event.stopPropagation();  
         const card = heartIcon.closest('.font-card');  
@@ -1088,7 +1095,6 @@
         heartIcon.classList.toggle('active');  
           
         if (heartIcon.classList.contains('active')) {  
-            // انتقال به ابتدای لیست (بعد از دکمه ایمپورت)  
             const importCard = container.querySelector('.card-import');  
             container.insertBefore(card, importCard.nextSibling);  
             showToast('به علاقه‌مندی‌ها اضافه شد');  
@@ -1097,15 +1103,22 @@
         }  
     }  
 
+    function selectPreset(presetKey, element) {
+        document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+        element.classList.add('active');
+        applyBadgePreset(presetKey);
+    }
+
     /* اعمال استایل برچسب‌های آماده */  
     function applyBadgePreset(presetKey) {  
-        if (presetKey === 'custom') return;  
-
         const badgeStyle = document.getElementById('badgeStyleSelect');  
         const badgePattern = document.getElementById('badgePatternSelect');  
         const opacity = document.getElementById('badgeOpacity');  
 
-        if (presetKey === 'neon_dark') {  
+        if (presetKey === 'custom') {
+            badgeStyle.value = 'none';
+            badgePattern.value = 'none';
+        } else if (presetKey === 'neon_dark') {  
             badgeStyle.value = 'rounded';  
             badgePattern.value = 'none';  
             colors.badge = '#111111';  
@@ -1307,13 +1320,11 @@
         const newColor = bgColors[bgIndex];  
         document.querySelector('.phone-container').style.backgroundColor = newColor;  
           
-        // بروزرسانی Meta Tag  
         const metaTheme = document.getElementById('themeColorMeta');  
         if (metaTheme) metaTheme.setAttribute('content', newColor);  
 
-        // ارسال رنگ جدید به اندروید (اسکچوار)  
         if (typeof Android !== 'undefined' && Android.updateStatusBarColor) {
-                Android.updateStatusBarColor(newColor);
+            Android.updateStatusBarColor(newColor);
         }
     }  
 
@@ -1362,4 +1373,4 @@
 </script>
 
 </body>  
-</html>  
+</html>
