@@ -3,7 +3,8 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
     <meta name="theme-color" id="themeColorMeta" content="#1976d2">  
-    <title>استوریو‌فونت 🖍️ - Story Font Studio</title>  <!-- فونت‌های گوگل و cdnjs -->  
+    <title>استوریو‌فونت 🖍️ - Story Font Studio</title>  
+<!-- فونت‌های گوگل و cdnjs -->  
 <link rel="preconnect" href="https://fonts.googleapis.com">  
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@700&family=Lalezar&family=Montserrat:wght@700;900&family=Pacifico&family=Poppins:wght@700;900&family=Rubik:wght@700;900&family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">  
@@ -116,7 +117,7 @@
     
     :root {  
         --primary-blue: #1976d2;  
-        --bg-canvas: #1976d2;  
+        --bg-canvas: #e91e63;  
         --card-bg: rgba(255, 255, 255, 0.22);  
         --card-border: rgba(255, 255, 255, 0.25);  
         --text-color: #ffffff;  
@@ -163,7 +164,6 @@
         }  
     }  
 
-    /* 1. نوار بالایی بدون تنظیمات */  
     .top-bar {  
         display: flex;  
         align-items: center;  
@@ -209,7 +209,6 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);  
     }  
 
-    /* بنر هشدار بالا */  
     .alert-banner {  
         margin: 0 16px;  
         background: rgba(0, 0, 0, 0.22);  
@@ -221,7 +220,6 @@
         backdrop-filter: blur(4px);  
     }  
 
-    /* 2. بوم اصلی نمایش */  
     .workspace {  
         flex: 1;  
         position: relative;  
@@ -236,7 +234,6 @@
         object-fit: contain;  
     }  
 
-    /* دکمه‌های شناور سمت چپ بوم */  
     .floating-controls-left {  
         position: absolute;  
         left: 16px;  
@@ -261,7 +258,6 @@
         font-size: 0.85rem;  
     }  
 
-    /* اسلایدر عمودی اندازه سمت راست - جابجاشده به راست‌تر */  
     .vertical-slider-wrap {  
         position: absolute;  
         right: 2px;  
@@ -295,7 +291,6 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.4);  
     }  
 
-    /* 3. پنل پایین */  
     .bottom-panel {  
         background: transparent;  
         display: flex;  
@@ -305,7 +300,6 @@
         z-index: 10;  
     }  
 
-    /* فیلترها - فقط All باقی مانده است */  
     .filter-tags {  
         display: flex;  
         gap: 8px;  
@@ -323,7 +317,6 @@
         cursor: pointer;  
     }  
 
-    /* کارت‌های افقی فونت */  
     .font-cards-scroll {  
         display: flex;  
         gap: 10px;  
@@ -393,7 +386,6 @@
         transform: scale(1.15);  
     }  
 
-    /* اسکرول افقی کارت‌های برچسب آماده */
     .preset-cards-scroll {
         display: flex;
         gap: 12px;
@@ -431,7 +423,6 @@
         text-align: center;
     }
 
-    /* تب‌های اصلی سفلی */  
     .main-tabs {  
         display: flex;  
         justify-content: space-around;  
@@ -465,7 +456,6 @@
         border-radius: 2px;  
     }  
 
-    /* پنل‌های تنظیمات زیرین */  
     .sub-panel {  
         display: none;  
         padding: 8px 16px;  
@@ -493,7 +483,6 @@
         outline: none;  
     }  
 
-    /* دکمه بازکننده طیف رنگ دایره‌ای */  
     .color-preview-btn {  
         width: 28px;  
         height: 28px;  
@@ -504,7 +493,6 @@
         display: inline-block;  
     }  
 
-    /* مدال طیف رنگ دایره‌ای */  
     .color-picker-modal {  
         position: absolute;  
         inset: 0;  
@@ -577,7 +565,6 @@
     .picker-btn-confirm { background: #ffffff; color: #000; }  
     .picker-btn-cancel { background: rgba(255,255,255,0.2); color: #fff; }  
 
-    /* مدال ویرایش متن */  
     .text-modal {  
         position: absolute;  
         top: 0; left: 0; right: 0; bottom: 0;  
@@ -614,7 +601,6 @@
         cursor: pointer;  
     }  
 
-    /* توست پیام */  
     .toast {  
         position: absolute;  
         top: 60px;  
@@ -637,10 +623,8 @@
 
 </head>  
 <body>  <div class="phone-container">  
-    <!-- پیام توست -->  
     <div class="toast" id="toast">متن در کلیپ بورد کپی شد</div>  
 
-    <!-- 1. نوار بالایی بدون تنظیمات -->  
     <div class="top-bar">  
         <div class="top-icons-right">  
             <button class="icon-btn" onclick="showToast('راهنما (به‌زودی...)')"><i class="fa-solid fa-circle-question"></i></button>  
@@ -652,46 +636,37 @@
         </div>  
     </div>  
 
-    <!-- بنر هشدار -->  
     <div class="alert-banner">  
         استوریو همراه همیشگی شماست... پس با آن همیشه بدرخشید ✨ 
     </div>  
 
-    <!-- 2. بوم اصلی Workspace -->  
     <div class="workspace">  
         <canvas id="canvas"></canvas>  
 
-        <!-- کنترل‌های سمت چپ بوم -->  
         <div class="floating-controls-left">  
             <button class="action-circle-btn" onclick="toggleAlign()"><i class="fa-solid fa-align-center" id="alignIcon"></i></button>  
             <button class="action-circle-btn" onclick="clearText()"><i class="fa-solid fa-trash-can"></i></button>  
             <button class="action-circle-btn" onclick="openTextModal()"><i class="fa-solid fa-pen"></i></button>  
         </div>  
 
-        <!-- اسلایدر اندازه سمت راست (دامنه بیشتر و جابجا شده به راست) -->  
         <div class="vertical-slider-wrap">  
             <input type="range" class="vertical-slider" id="sliderSize" min="5" max="180" value="55">  
         </div>  
     </div>  
 
-    <!-- 3. پنل تنظیمات زیرین -->  
     <div class="bottom-panel">  
-          
-        <!-- تب ۱: فونت‌ها -->  
         <div id="tabContentFonts">  
             <div class="filter-tags">  
                 <button class="tag-btn">All <i class="fa-solid fa-angle-down" style="font-size: 0.6rem;"></i></button>  
             </div>  
 
             <div class="font-cards-scroll" id="fontCardsContainer" style="margin-top: 8px;">  
-                <!-- کارت ایمپورت -->  
                 <div class="card-import" onclick="document.getElementById('fontFileInput').click()">  
                     <i class="fa-solid fa-plus"></i>  
                     <span>بارگذاری<br>فونت</span>  
                     <input type="file" id="fontFileInput" accept=".ttf,.otf,.woff,.woff2" style="display: none;">  
                 </div>  
 
-                <!-- کارت‌های فونت جدید -->  
                 <div class="font-card" data-font="Studio" onclick="selectFont('Studio', this)">  
                     <span class="font-card-title" style="font-family: 'Studio';">استودیو</span>  
                     <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>  
@@ -767,7 +742,6 @@
                     <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>
                 </div>
                 
-                <!-- کارت‌های فونت قبلی -->  
                 <div class="font-card active" data-font="Vazirmatn" onclick="selectFont('Vazirmatn', this)">  
                     <span class="font-card-title" style="font-family: 'Vazirmatn';">وزیر</span>  
                     <i class="fa-solid fa-heart font-card-heart" onclick="toggleFavorite(event, this)"></i>  
@@ -814,12 +788,14 @@
                 </div>  
             </div>  
         </div>  
-        <!-- تب ۲: استایل -->  
+
         <div class="sub-panel" id="tabContentStyle">  
             <div class="control-row">  
                 <label>طرح برچسب:</label>  
                 <select id="badgeStyleSelect" onchange="render()">  
                     <option value="pill" style="color:black">کپسولی گرد</option>  
+                    <option value="pill_3d" style="color:black">کپسولی ۳D</option>
+                    <option value="sticker" style="color:black">استیکری</option>
                     <option value="rounded" style="color:black">گوشه گرد</option>  
                     <option value="rect" style="color:black">مستطیل</option>  
                     <option value="leaf" style="color:black">برگ (قطری)</option>  
@@ -847,7 +823,6 @@
             </div>  
         </div>  
 
-        <!-- تب ۳: رنگ و سایه (همراه پالت طیف دایره‌ای) -->  
         <div class="sub-panel" id="tabContentColor">  
             <div class="control-row">  
                 <span>رنگ متن:</span>  
@@ -867,11 +842,17 @@
             </div>  
         </div>  
 
-        <!-- تب ۴: برچسب آماده (به‌صورت کارت‌های کاروسلی کاملاً شفاف مشابه فونت) -->  
+        <!-- تب ۴: برچسب آماده -->  
         <div class="sub-panel" id="tabContentBeauty">  
             <div class="preset-cards-scroll">
                 <div class="preset-card active" onclick="selectPreset('custom', this)">
                     <span class="preset-card-title">سفارشی</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('pill_3d_shadow', this)">
+                    <span class="preset-card-title" style="background: #ffb7d5; color: #000; padding: 3px 10px; border-radius: 12px; border: 1.5px solid #000; box-shadow: 3px 3px 0 #000;">کپسولی ۳D</span>
+                </div>
+                <div class="preset-card" onclick="selectPreset('sticker_white', this)">
+                    <span class="preset-card-title" style="background: #ffb700; color: #d32f2f; padding: 3px 8px; border: 2px solid #fff; border-radius: 6px; box-shadow: 2px 2px 0 #800000;">استیکری سفید</span>
                 </div>
                 <div class="preset-card" onclick="selectPreset('neon_dark', this)">
                     <span class="preset-card-title" style="background: #111; color: #00ffff; padding: 3px 8px; border-radius: 6px;">نئون مشکی</span>
@@ -891,7 +872,6 @@
             </div>
         </div>  
 
-        <!-- نوار تب‌های اصلی پایین -->  
         <div class="main-tabs">  
             <button class="main-tab-item active" onclick="switchMainTab('fonts', this)">فونت</button>  
             <button class="main-tab-item" onclick="switchMainTab('style', this)">استایل</button>  
@@ -900,7 +880,6 @@
         </div>  
     </div>  
 
-    <!-- مدال طیف انتخاب رنگ دایره‌ای -->  
     <div class="color-picker-modal" id="colorPickerModal">  
         <canvas class="spectrum-wheel" id="spectrumCanvas" width="220" height="220"></canvas>  
         <div class="wheel-cursor" id="wheelCursor"></div>  
@@ -922,26 +901,23 @@
         </div>  
     </div>  
 
-    <!-- مدال ویرایش متن -->  
     <div class="text-modal" id="textModal">  
         <button class="text-modal-close" onclick="closeTextModal()">تایید</button>  
-        <textarea id="mainTextInput" placeholder="متنتو بنویس...">متنتو بنویس...</textarea>  
+        <textarea id="mainTextInput" placeholder="متنتو بنویس...">سلام</textarea>  
     </div>  
-</div>  
-
+</div>
 <script>  
     const canvas = document.getElementById('canvas');  
     const ctx = canvas.getContext('2d');  
     const mainTextInput = document.getElementById('mainTextInput');  
     const sliderSize = document.getElementById('sliderSize');  
 
-    let currentText = "متنتو بنویس...";  
+    let currentText = "سلام";  
     let currentFont = "Vazirmatn";  
     let alignState = 0; // 0: center, 1: right, 2: left  
-    let bgColors = ['#1976d2', '#8e24aa', '#e91e63', '#009688', '#ff5722', '#181818'];  
+    let bgColors = ['#e91e63', '#1976d2', '#8e24aa', '#009688', '#ff5722', '#181818'];  
     let bgIndex = 0;  
 
-    // ذخیره رنگ‌ها  
     let colors = {  
         text: '#ffffff',  
         badge: '#000000',  
@@ -1017,8 +993,8 @@
 
         const startY = (canvas.height / 2) - (totalHeight / 2) + (lineHeight / 2);  
 
-        // رسم برچسب  
-        if (badgeStyle !== 'none') {  
+        // ۱. رسم برچسب‌های استاندارد و کپسولی ۳D
+        if (badgeStyle !== 'none' && badgeStyle !== 'sticker') {  
             lines.forEach((line, i) => {  
                 const metrics = ctx.measureText(line || " ");  
                 const textWidth = metrics.width;  
@@ -1036,44 +1012,124 @@
 
                 ctx.save();  
                 ctx.globalAlpha = opacity;  
-                ctx.fillStyle = colors.badge;  
-                ctx.beginPath();  
 
-                if (badgeStyle === 'pill') {  
-                    ctx.roundRect(boxX, boxY, boxW, boxH, boxH / 2);  
-                } else if (badgeStyle === 'rounded') {  
-                    ctx.roundRect(boxX, boxY, boxW, boxH, 14);  
-                } else if (badgeStyle === 'cut') {  
-                    ctx.moveTo(boxX + 15, boxY);  
-                    ctx.lineTo(boxX + boxW, boxY);  
-                    ctx.lineTo(boxX + boxW - 15, boxY + boxH);  
-                    ctx.lineTo(boxX, boxY + boxH);  
-                    ctx.closePath();  
-                } else if (badgeStyle === 'leaf') {  
-                    ctx.roundRect(boxX, boxY, boxW, boxH, [20, 0, 20, 0]);  
-                } else {  
-                    ctx.rect(boxX, boxY, boxW, boxH);  
-                }  
-                ctx.fill();  
+                if (badgeStyle === 'pill_3d') {
+                    // سایه سخت کپسولی ۳D
+                    const sOffset = fontSize * 0.12;
+                    ctx.fillStyle = colors.shadow || '#000000';
+                    ctx.beginPath();
+                    ctx.roundRect(boxX + sOffset, boxY + sOffset, boxW, boxH, boxH / 2);
+                    ctx.fill();
 
-                if (badgePattern !== 'none') {  
-                    ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.18)');  
+                    // پس زمینه اصلی کپسول
+                    ctx.fillStyle = colors.badge;
+                    ctx.beginPath();
+                    ctx.roundRect(boxX, boxY, boxW, boxH, boxH / 2);
+                    ctx.fill();
+
+                    // حاشیه دور مشکی
+                    ctx.lineWidth = Math.max(3, fontSize * 0.04);
+                    ctx.strokeStyle = '#000000';
+                    ctx.stroke();
+                } else {
+                    ctx.fillStyle = colors.badge;  
+                    ctx.beginPath();  
+
+                    if (badgeStyle === 'pill') {  
+                        ctx.roundRect(boxX, boxY, boxW, boxH, boxH / 2);  
+                    } else if (badgeStyle === 'rounded') {  
+                        ctx.roundRect(boxX, boxY, boxW, boxH, 14);  
+                    } else if (badgeStyle === 'cut') {  
+                        ctx.moveTo(boxX + 15, boxY);  
+                        ctx.lineTo(boxX + boxW, boxY);  
+                        ctx.lineTo(boxX + boxW - 15, boxY + boxH);  
+                        ctx.lineTo(boxX, boxY + boxH);  
+                        ctx.closePath();  
+                    } else if (badgeStyle === 'leaf') {  
+                        ctx.roundRect(boxX, boxY, boxW, boxH, [20, 0, 20, 0]);  
+                    } else {  
+                        ctx.rect(boxX, boxY, boxW, boxH);  
+                    }  
                     ctx.fill();  
-                }  
+
+                    if (badgePattern !== 'none') {  
+                        ctx.fillStyle = createPattern(badgePattern, 'rgba(0,0,0,0.18)');  
+                        ctx.fill();  
+                    }  
+                }
                 ctx.restore();  
             });  
         }  
 
-        // متن و سایه  
-        ctx.shadowColor = colors.shadow;  
-        ctx.shadowBlur = shadowBlur;  
-        ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;  
-        ctx.fillStyle = colors.text;  
+        // ۲. افکت ویژه برچسب استیکری سفید (تصویر دوم)
+        if (badgeStyle === 'sticker') {
+            const strokeW = fontSize * 0.16;
+            ctx.save();
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = strokeW;
 
-        lines.forEach((line, i) => {  
-            const y = startY + (i * lineHeight);  
-            ctx.fillText(line, centerX, y);  
-        });  
+            // لایه استیکر سفید دور تا دور
+            lines.forEach((line, i) => {
+                const y = startY + (i * lineHeight);
+                ctx.strokeText(line, centerX, y);
+                ctx.fillText(line, centerX, y);
+            });
+            ctx.restore();
+        }
+
+        // ۳. رسم سایه و متن
+        if (badgeStyle === 'sticker') {
+            // سایه ۳D لایه‌ای برای استیکر (قهوه‌ای/عنابی)
+            const shadowSteps = Math.floor(fontSize * 0.12);
+            ctx.save();
+            ctx.fillStyle = colors.shadow || '#5d0000';
+            for (let s = shadowSteps; s > 0; s--) {
+                lines.forEach((line, i) => {
+                    const y = startY + (i * lineHeight);
+                    ctx.fillText(line, centerX - (s * 0.7), y + s);
+                });
+            }
+            ctx.restore();
+
+            // حاشیه قرمز/آجرنمای دور متن
+            ctx.save();
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = fontSize * 0.08;
+            ctx.strokeStyle = '#c62828';
+            lines.forEach((line, i) => {
+                const y = startY + (i * lineHeight);
+                ctx.strokeText(line, centerX, y);
+            });
+            ctx.restore();
+
+            // متن اصلی با گرادیان زرد به نارنجی
+            ctx.save();
+            lines.forEach((line, i) => {
+                const y = startY + (i * lineHeight);
+                const grad = ctx.createLinearGradient(centerX, y - fontSize / 2, centerX, y + fontSize / 2);
+                grad.addColorStop(0, '#ffea00');
+                grad.addColorStop(1, '#ff9100');
+                ctx.fillStyle = grad;
+                ctx.fillText(line, centerX, y);
+            });
+            ctx.restore();
+        } else {
+            // حالت رندر معمولی متن
+            ctx.save();
+            ctx.shadowColor = colors.shadow;  
+            ctx.shadowBlur = shadowBlur;  
+            ctx.shadowOffsetY = shadowBlur > 0 ? 4 : 0;  
+            ctx.fillStyle = colors.text;  
+
+            lines.forEach((line, i) => {  
+                const y = startY + (i * lineHeight);  
+                ctx.fillText(line, centerX, y);  
+            });  
+            ctx.restore();
+        }
 
         ctx.restore();  
     }  
@@ -1109,7 +1165,6 @@
         applyBadgePreset(presetKey);
     }
 
-    /* اعمال استایل برچسب‌های آماده */  
     function applyBadgePreset(presetKey) {  
         const badgeStyle = document.getElementById('badgeStyleSelect');  
         const badgePattern = document.getElementById('badgePatternSelect');  
@@ -1118,6 +1173,20 @@
         if (presetKey === 'custom') {
             badgeStyle.value = 'none';
             badgePattern.value = 'none';
+        } else if (presetKey === 'pill_3d_shadow') {
+            badgeStyle.value = 'pill_3d';
+            badgePattern.value = 'none';
+            colors.badge = '#ffaee5'; 
+            colors.text = '#000000';  
+            colors.shadow = '#000000';
+            opacity.value = '1';
+        } else if (presetKey === 'sticker_white') {
+            badgeStyle.value = 'sticker';
+            badgePattern.value = 'none';
+            colors.badge = '#ffffff'; 
+            colors.text = '#ffea00';  
+            colors.shadow = '#5d0000'; 
+            opacity.value = '1';
         } else if (presetKey === 'neon_dark') {  
             badgeStyle.value = 'rounded';  
             badgePattern.value = 'none';  
@@ -1155,7 +1224,6 @@
         render();  
     }  
 
-    /* --- پیاده‌سازی پالت انتخاب رنگ طیف دایره‌ای --- */  
     const spectrumCanvas = document.getElementById('spectrumCanvas');  
     const sCtx = spectrumCanvas.getContext('2d');  
     const wheelCursor = document.getElementById('wheelCursor');  
